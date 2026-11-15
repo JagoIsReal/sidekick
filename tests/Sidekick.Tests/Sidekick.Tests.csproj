@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseWindowsForms>true</UseWindowsForms>
+    <IsTestProject>true</IsTestProject>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsPackable>false</IsPackable>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <DalamudTestPath>$(APPDATA)/XIVLauncher/addon/Hooks/dev/</DalamudTestPath>
+    <DalamudTestPath Condition="'$(DALAMUD_HOME)' != ''">$(DALAMUD_HOME)/</DalamudTestPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Sidekick/Sidekick.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" PrivateAssets="all" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <Using Include="Xunit" />
+    <!-- Tests load public Dalamud types without a running game. Never package these copies with the plugin. -->
+    <Reference Include="Dalamud" HintPath="$(DalamudTestPath)Dalamud.dll" Private="true" />
+    <Reference Include="Lumina" HintPath="$(DalamudTestPath)Lumina.dll" Private="true" />
+    <Reference Include="Lumina.Excel" HintPath="$(DalamudTestPath)Lumina.Excel.dll" Private="true" />
+    <Reference Include="FFXIVClientStructs" HintPath="$(DalamudTestPath)FFXIVClientStructs.dll" Private="true" />
+    <Reference Include="InteropGenerator.Runtime" HintPath="$(DalamudTestPath)InteropGenerator.Runtime.dll" Private="true" />
+    <Reference Include="Serilog" HintPath="$(DalamudTestPath)Serilog.dll" Private="true" />
+    <Reference Include="Newtonsoft.Json" HintPath="$(DalamudTestPath)Newtonsoft.Json.dll" Private="true" />
+    <Reference Include="Dalamud.Bindings.ImGui" HintPath="$(DalamudTestPath)Dalamud.Bindings.ImGui.dll" Private="true" />
+    <Reference Include="Dalamud.Common" HintPath="$(DalamudTestPath)Dalamud.Common.dll" Private="true" />
+  </ItemGroup>
+</Project>
+

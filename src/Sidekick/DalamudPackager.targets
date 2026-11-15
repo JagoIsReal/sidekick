@@ -1,0 +1,27 @@
+<Project>
+  <Target Name="PackageSidekick" AfterTargets="Build">
+    <PropertyGroup>
+      <SidekickMakeZip Condition="'$(Configuration)' == 'Release'">true</SidekickMakeZip>
+      <SidekickMakeZip Condition="'$(Configuration)' != 'Release'">false</SidekickMakeZip>
+    </PropertyGroup>
+    <!-- Keep the local icon inside the package, rather than exporting it beside the ZIP. -->
+    <DalamudPackager ProjectDir="$(ProjectDir)"
+                    OutputPath="$(OutputPath)"
+                    AssemblyName="$(AssemblyName)"
+                    MakeZip="$(SidekickMakeZip)"
+                    HandleImages="false"
+                    Include="$(AssemblyName).dll;$(AssemblyName).json;$(AssemblyName).deps.json;fr/$(AssemblyName).resources.dll;images/icon.png"
+                    Author="$(Author)"
+                    Name="$(Name)"
+                    MinimumDalamudVersion="$(MinimumDalamudVersion)"
+                    Punchline="$(Punchline)"
+                    Description="$(Description)"
+                    ApplicableVersion="$(ApplicableVersion)"
+                    RepoUrl="$(RepoUrl)"
+                    Tags="$(Tags)"
+                    DalamudApiLevel="$(DalamudApiLevel)"
+                    LoadSync="$(LoadSync)"
+                    CanUnloadAsync="$(CanUnloadAsync)"
+                    IconUrl="$(IconUrl)" />
+  </Target>
+</Project>

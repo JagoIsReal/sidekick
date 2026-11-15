@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Sidekick | Settings</value>
+  </data>
+  <data name="EnableHighlighting" xml:space="preserve">
+    <value>Enable highlighting</value>
+  </data>
+  <data name="HighlightColor" xml:space="preserve">
+    <value>Highlight color</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="PreviewMessage" xml:space="preserve">
+    <value>Hello, {0}! This message mentions your character.</value>
+    <comment>{0}: character first name.</comment>
+  </data>
+  <data name="CharacterStatus" xml:space="preserve">
+    <value>Character: {0}</value>
+    <comment>{0}: full character name or localized not-logged-in label.</comment>
+  </data>
+  <data name="NotLoggedIn" xml:space="preserve">
+    <value>Not logged in</value>
+  </data>
+  <data name="PreviewInput" xml:space="preserve">
+    <value>Test message</value>
+  </data>
+  <data name="PreviewHelp" xml:space="preserve">
+    <value>Preview the selected character's name and keywords, together with Account keywords. You can type a test message below.</value>
+  </data>
+  <data name="CustomKeywords" xml:space="preserve">
+    <value>Custom keywords</value>
+  </data>
+  <data name="KeywordsHelp" xml:space="preserve">
+    <value>Words and phrases match literally, ignoring case, with whole-word boundaries. They share the highlight color. Up to {0} keywords per character and {0} Account keywords.</value>
+    <comment>{0}: maximum rules per character or Account list.</comment>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="AccountHelp" xml:space="preserve">
+    <value>Account checked: use this keyword for all characters in this local configuration. Unchecked: use it only for the character and home world selected above.</value>
+  </data>
+  <data name="CharacterName" xml:space="preserve">
+    <value>Full character name</value>
+  </data>
+  <data name="HomeWorld" xml:space="preserve">
+    <value>Home world</value>
+  </data>
+  <data name="SelectWorld" xml:space="preserve">
+    <value>Select a world</value>
+  </data>
+  <data name="SearchWorlds" xml:space="preserve">
+    <value>Search worlds</value>
+  </data>
+  <data name="SavedCharacters" xml:space="preserve">
+    <value>Saved characters</value>
+  </data>
+  <data name="SelectCharacter" xml:space="preserve">
+    <value>Select a saved character</value>
+  </data>
+  <data name="CharacterProfileHelp" xml:space="preserve">
+    <value>Enter the full first and last name and select the character's home world. You can prepare a profile without logging into that character.</value>
+  </data>
+  <data name="Keyword" xml:space="preserve">
+    <value>Keyword or phrase</value>
+  </data>
+  <data name="KeywordEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="AddKeyword" xml:space="preserve">
+    <value>Add keyword</value>
+  </data>
+  <data name="SaveKeyword" xml:space="preserve">
+    <value>Save keyword</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="KeywordCount" xml:space="preserve">
+    <value>Account and selected character keywords: {0}</value>
+    <comment>{0}: combined rule count.</comment>
+  </data>
+  <data name="KeywordDuplicate" xml:space="preserve">
+    <value>This keyword already exists in the selected profile.</value>
+  </data>
+  <data name="KeywordLimit" xml:space="preserve">
+    <value>This profile has reached its keyword limit. Edit or remove an existing keyword first.</value>
+  </data>
+  <data name="KeywordInvalid" xml:space="preserve">
+    <value>Enter between 1 and {0} characters, without line breaks or control characters.</value>
+    <comment>{0}: maximum keyword length.</comment>
+  </data>
+  <data name="KeywordProfileChanged" xml:space="preserve">
+    <value>The selected profile or keyword is no longer available. Select the profile again.</value>
+  </data>
+  <data name="NewMessagesOnly" xml:space="preserve">
+    <value>Changes apply to new messages in native chat and Chat 2. Existing messages keep their previous colors.</value>
+  </data>
+  <data name="CommandHelp" xml:space="preserve">
+    <value>Open Sidekick.</value>
+  </data>
+  <data name="ConfigurationReadError" xml:space="preserve">
+    <value>Your settings file could not be loaded. Changes apply for this session only. Back up and repair the file, then reload the plugin to enable saving.</value>
+  </data>
+  <data name="ConfigurationSaveError" xml:space="preserve">
+    <value>Your settings could not be saved. Check the Dalamud log and the settings folder permissions.</value>
+  </data>
+  <data name="ChatTab" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="ModRulesTab" xml:space="preserve">
+    <value>Penumbra rules</value>
+  </data>
+  <data name="EnableModRules" xml:space="preserve">
+    <value>Enable location rules</value>
+  </data>
+  <data name="ModRulesHelp" xml:space="preserve">
+    <value>Each rule applies temporary settings to its selected Penumbra collection while the location matches. Leaving the location, pausing the rule or unloading Sidekick removes its overrides. Permanent settings are kept.</value>
+  </data>
+  <data name="PenumbraReady" xml:space="preserve">
+    <value>Penumbra IPC is available.</value>
+  </data>
+  <data name="PenumbraUnavailable" xml:space="preserve">
+    <value>Penumbra is unavailable or its IPC version is unsupported. You can still edit saved rules.</value>
+  </data>
+  <data name="ModIntegrationError" xml:space="preserve">
+    <value>Location or Penumbra integration failed. Check the Dalamud log; pending cleanup will be retried.</value>
+  </data>
+  <data name="ModRulesStatus" xml:space="preserve">
+    <value>Active overrides: {0}. Skipped mods: {1}.</value>
+    <comment>{0}: held override count; {1}: skipped mod count.</comment>
+  </data>
+  <data name="RefreshMods" xml:space="preserve">
+    <value>Refresh lists / retry skipped rules</value>
+  </data>
+  <data name="LocationUnavailable" xml:space="preserve">
+    <value>Current location is unavailable (logged out or loading).</value>
+  </data>
+  <data name="ModRuleOrderHelp" xml:space="preserve">
+    <value>All conditions in a rule must match. The last matching rule wins for each mod. Toggle inverts its permanent enabled state once per activation. Existing temporary settings from other sources are skipped.</value>
+  </data>
+  <data name="MoveUp" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="MoveDown" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="AddModRule" xml:space="preserve">
+    <value>Add rule</value>
+  </data>
+  <data name="RuleName" xml:space="preserve">
+    <value>Rule name</value>
+  </data>
+  <data name="UseCurrentLocation" xml:space="preserve">
+    <value>Use current location</value>
+  </data>
+  <data name="LocationFiltersHelp" xml:space="preserve">
+    <value>Any ignores a condition; use 0 for Any in numeric fields. A residential zone includes its house and room interiors; use Housing area to choose indoors or outdoors. Other zones and duties match their exact territory. Instance means the public instance number (1, 2, 3...), not a unique duty session. Housing numbers start at 1; plot detection uses the game's current plot, not a distance radius.</value>
+  </data>
+  <data name="CurrentWorld" xml:space="preserve">
+    <value>Current world</value>
+  </data>
+  <data name="Territory" xml:space="preserve">
+    <value>Zone / duty</value>
+  </data>
+  <data name="HousingDistrict" xml:space="preserve">
+    <value>Housing district</value>
+  </data>
+  <data name="PublicInstance" xml:space="preserve">
+    <value>Public instance (0 = Any)</value>
+  </data>
+  <data name="Ward" xml:space="preserve">
+    <value>Ward (0 = Any)</value>
+  </data>
+  <data name="Plot" xml:space="preserve">
+    <value>Plot (0 = Any)</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Apartment / FC room (0 = Any)</value>
+  </data>
+  <data name="HousingDivision" xml:space="preserve">
+    <value>Housing division</value>
+  </data>
+  <data name="HousingArea" xml:space="preserve">
+    <value>Housing area</value>
+  </data>
+  <data name="AnyLocation" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="MainDivision" xml:space="preserve">
+    <value>Main division</value>
+  </data>
+  <data name="Subdivision" xml:space="preserve">
+    <value>Subdivision</value>
+  </data>
+  <data name="Outdoors" xml:space="preserve">
+    <value>Outdoors</value>
+  </data>
+  <data name="Indoors" xml:space="preserve">
+    <value>Indoors</value>
+  </data>
+  <data name="ModAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="EnableMod" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="DisableMod" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="ToggleMod" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
+  <data name="SelectedMods" xml:space="preserve">
+    <value>Selected mods: {0} / 64</value>
+    <comment>{0}: selected mod count.</comment>
+  </data>
+  <data name="SearchMods" xml:space="preserve">
+    <value>Search mods</value>
+  </data>
+  <data name="ModRuleInvalid" xml:space="preserve">
+    <value>Enter a rule name (1-80 characters), at least one valid location condition and 1-64 mods. Up to 64 rules can be saved.</value>
+  </data>
+  <data name="SaveModRule" xml:space="preserve">
+    <value>Save rule</value>
+  </data>
+  <data name="SearchLocations" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="CurrentLocation" xml:space="preserve">
+    <value>Current location: {0} · {1} · Instance {2} · Ward {3} · Plot {4} · Room {5}</value>
+    <comment>{0}: world; {1}: territory; {2}: public instance (0 when none); {3}: ward; {4}: plot; {5}: room. Unavailable housing values use an em dash.</comment>
+  </data>
+  <data name="ResidentialLocation" xml:space="preserve">
+    <value>{0} ({1})</value>
+    <comment>{0}: residential district name; {1}: current interior territory name.</comment>
+  </data>
+  <data name="TargetCollection" xml:space="preserve">
+    <value>Target collection</value>
+  </data>
+  <data name="SearchCollections" xml:space="preserve">
+    <value>Search collections</value>
+  </data>
+  <data name="CurrentCharacterCollection" xml:space="preserve">
+    <value>Current character collection</value>
+  </data>
+  <data name="MissingCollection" xml:space="preserve">
+    <value>Saved collection unavailable. Select a replacement</value>
+  </data>
+  <data name="TargetCollectionHelp" xml:space="preserve">
+    <value>Select a collection from Penumbra's list, such as Default for housing. Named collections keep their stable ID. Current character collection follows your effective collection. A missing collection is skipped; it never falls back to another target. Changes can affect all actors or assets using the selected collection.</value>
+  </data>
+  <data name="ModRefresh" xml:space="preserve">
+    <value>Refresh after changes</value>
+  </data>
+  <data name="RefreshCollection" xml:space="preserve">
+    <value>Collection members</value>
+  </data>
+  <data name="RefreshAll" xml:space="preserve">
+    <value>Redraw all</value>
+  </data>
+  <data name="RefreshSelf" xml:space="preserve">
+    <value>Self</value>
+  </data>
+  <data name="RefreshFurniture" xml:space="preserve">
+    <value>Furniture (indoors)</value>
+  </data>
+  <data name="ModRefreshHelp" xml:space="preserve">
+    <value>The selected refresh runs after applying and removing an override, once per batch. Redraw all refreshes actors; furniture is separate and Penumbra currently supports indoor furniture only. The refresh target does not change which collection receives the mod settings.</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="PenumbraReadyShort" xml:space="preserve">
+    <value>Penumbra available</value>
+  </data>
+  <data name="PenumbraUnavailableShort" xml:space="preserve">
+    <value>Penumbra unavailable</value>
+  </data>
+  <data name="YourLocation" xml:space="preserve">
+    <value>Current location</value>
+  </data>
+  <data name="SavedRules" xml:space="preserve">
+    <value>Your rules</value>
+  </data>
+  <data name="RefreshListsHelp" xml:space="preserve">
+    <value>Refresh and retry. Reload mods and collections from Penumbra, then retry skipped rules.</value>
+  </data>
+  <data name="NoModRules" xml:space="preserve">
+    <value>No rules yet. Add a rule to choose a location, collection and mods.</value>
+  </data>
+  <data name="Mods" xml:space="preserve">
+    <value>Mods</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="RuleEnabledHelp" xml:space="preserve">
+    <value>Enable or pause this rule. A paused rule releases its temporary settings.</value>
+  </data>
+  <data name="RuleSummary" xml:space="preserve">
+    <value>{0} · {1} · {2}</value>
+  </data>
+  <data name="EditRule" xml:space="preserve">
+    <value>Edit rule</value>
+  </data>
+  <data name="NewRule" xml:space="preserve">
+    <value>New rule</value>
+  </data>
+  <data name="RuleDraftHelp" xml:space="preserve">
+    <value>Changes are applied only after saving. Cancel returns to the list without modifying the saved rule.</value>
+  </data>
+  <data name="LocationSection" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="HousingSection" xml:space="preserve">
+    <value>Housing address</value>
+  </data>
+  <data name="HousingHelp" xml:space="preserve">
+    <value>Use 0 to ignore a number. Ward and plot start at 1. A residential district includes its interiors; the area selector distinguishes indoors and outdoors.</value>
+  </data>
+  <data name="ExecutionSection" xml:space="preserve">
+    <value>Penumbra settings</value>
+  </data>
+  <data name="NoModsFound" xml:space="preserve">
+    <value>No mods match this search.</value>
+  </data>
+  <data name="KeywordHint" xml:space="preserve">
+    <value>Enter a word or phrase</value>
+  </data>
+  <data name="NoKeywords" xml:space="preserve">
+    <value>No keywords for this profile yet.</value>
+  </data>
+  <data name="LocationHeading" xml:space="preserve">
+    <value>{0} · {1}</value>
+    <comment>{0}: world; {1}: territory.</comment>
+  </data>
+  <data name="InstanceSummary" xml:space="preserve">
+    <value>Instance {0}</value>
+    <comment>{0}: public instance number.</comment>
+  </data>
+  <data name="WardSummary" xml:space="preserve">
+    <value>Ward {0}</value>
+    <comment>{0}: one-based housing ward.</comment>
+  </data>
+  <data name="PlotSummary" xml:space="preserve">
+    <value>Plot {0}</value>
+    <comment>{0}: one-based housing plot.</comment>
+  </data>
+  <data name="RoomSummary" xml:space="preserve">
+    <value>Room {0}</value>
+    <comment>{0}: apartment or private room.</comment>
+  </data>
+  <data name="FocusTab" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="FocusEnabled" xml:space="preserve">
+    <value>Focus: on</value>
+  </data>
+  <data name="FocusDisabled" xml:space="preserve">
+    <value>Focus: off</value>
+  </data>
+  <data name="FocusToggle" xml:space="preserve">
+    <value>Toggle Focus (/sk focus)</value>
+  </data>
+  <data name="FocusToggleHelp" xml:space="preserve">
+    <value>Use this button or /sk focus to toggle Focus. /sk focus on and /sk focus off also work in macros. Only new message bodies are affected. Your own messages and system messages remain unchanged.</value>
+  </data>
+  <data name="FocusCriteria" xml:space="preserve">
+    <value>Keep fully readable</value>
+  </data>
+  <data name="FocusCriteriaHelp" xml:space="preserve">
+    <value>Choose a distance, a list of participants, or both. The other authors in the selected channels receive the configured opacity. Settings are shared by characters using this local configuration.</value>
+  </data>
+  <data name="FocusUseDistance" xml:space="preserve">
+    <value>Within range</value>
+  </data>
+  <data name="FocusDistanceHelp" xml:space="preserve">
+    <value>Distance in yalms (y), from 1 to 300, measured in 3D when a message arrives. Only loaded players have a known position. An identified author outside that area is considered out of range. Moving later does not change old messages.</value>
+  </data>
+  <data name="FocusUseParticipants" xml:space="preserve">
+    <value>Selected participants</value>
+  </data>
+  <data name="FocusParticipantsHelp" xml:space="preserve">
+    <value>Add nearby players or enter a full character name and home world manually. Checked participants are selected. Visited worlds do not change their identity. Authors that cannot be identified safely remain readable.</value>
+  </data>
+  <data name="FocusNoCriteria" xml:space="preserve">
+    <value>All other identified players in the selected channels are dimmed.</value>
+  </data>
+  <data name="FocusCombination" xml:space="preserve">
+    <value>When both criteria are enabled</value>
+  </data>
+  <data name="FocusCombinationHelp" xml:space="preserve">
+    <value>OR keeps nearby players or listed participants readable. AND keeps only listed participants who are also nearby readable.</value>
+  </data>
+  <data name="FocusAny" xml:space="preserve">
+    <value>OR: nearby or selected</value>
+  </data>
+  <data name="FocusAll" xml:space="preserve">
+    <value>AND: nearby and selected</value>
+  </data>
+  <data name="FocusOpacity" xml:space="preserve">
+    <value>Other messages: opacity</value>
+  </data>
+  <data name="FocusOpacityHelp" xml:space="preserve">
+    <value>From 1% to 100%, with 25% by default. Focus multiplies the alpha of text colors after Sidekick highlighting. Icons, sender names and timestamps are unchanged.</value>
+  </data>
+  <data name="FocusGameColors" xml:space="preserve">
+    <value>Dimmed messages use FFXIV channel colors; embedded text colors are preserved.</value>
+  </data>
+  <data name="FocusUnresolvedColors" xml:space="preserve">
+    <value>{0} message(s) kept readable because a color could not be resolved.</value>
+  </data>
+  <data name="FocusChannels" xml:space="preserve">
+    <value>Channels</value>
+  </data>
+  <data name="FocusChannelsHelp" xml:space="preserve">
+    <value>Only checked channels are affected. Say and emotes are selected by default. Private messages are optional. System, NPC and GM messages are always preserved.</value>
+  </data>
+  <data name="FocusNoChannels" xml:space="preserve">
+    <value>Select a channel to apply Focus.</value>
+  </data>
+  <data name="FocusParticipants" xml:space="preserve">
+    <value>Participants</value>
+  </data>
+  <data name="FocusAddManual" xml:space="preserve">
+    <value>Add a character manually</value>
+  </data>
+  <data name="FocusNearby" xml:space="preserve">
+    <value>Select nearby characters…</value>
+  </data>
+  <data name="FocusNearbyHint" xml:space="preserve">
+    <value>Search by character or world…</value>
+  </data>
+  <data name="FocusNearbyEmpty" xml:space="preserve">
+    <value>No nearby characters are available.</value>
+  </data>
+  <data name="FocusNearbyUnavailable" xml:space="preserve">
+    <value>Nearby characters are temporarily unavailable.</value>
+  </data>
+  <data name="FocusNearbyEntry" xml:space="preserve">
+    <value>{0} @ {1} ({2:0.#} y)</value>
+  </data>
+  <data name="FocusParticipantEntry" xml:space="preserve">
+    <value>{0} @ {1}</value>
+  </data>
+  <data name="FocusNoParticipants" xml:space="preserve">
+    <value>No saved participants. Select nearby characters or use + to add one manually.</value>
+  </data>
+  <data name="FocusParticipantDuplicate" xml:space="preserve">
+    <value>This character is already in the list.</value>
+  </data>
+  <data name="FocusParticipantLimit" xml:space="preserve">
+    <value>The list is limited to 64 participants.</value>
+  </data>
+  <data name="FocusParticipantInvalid" xml:space="preserve">
+    <value>Enter a valid full character name and select a home world.</value>
+  </data>
+  <data name="FocusShortCommandUnavailable" xml:space="preserve">
+    <value>Sidekick: /sk is already registered. Use /sidekick instead.</value>
+  </data>
+  <data name="FocusCommandUsage" xml:space="preserve">
+    <value>Sidekick: /sk opens settings; /sk focus [on|off] controls Focus; /sk cpose N selects a pose, starting at 1. /sidekick accepts the same arguments.</value>
+  </data>
+  <data name="FocusChannelSay" xml:space="preserve">
+    <value>Say (/say)</value>
+  </data>
+  <data name="FocusChannelCustomEmote" xml:space="preserve">
+    <value>Custom emotes (/em)</value>
+  </data>
+  <data name="FocusChannelStandardEmote" xml:space="preserve">
+    <value>Standard emotes</value>
+  </data>
+  <data name="FocusChannelYell" xml:space="preserve">
+    <value>Yell (/yell)</value>
+  </data>
+  <data name="FocusChannelShout" xml:space="preserve">
+    <value>Shout (/shout)</value>
+  </data>
+  <data name="FocusChannelTellIncoming" xml:space="preserve">
+    <value>Incoming tells</value>
+  </data>
+  <data name="FocusChannelTellOutgoing" xml:space="preserve">
+    <value>Outgoing tells</value>
+  </data>
+  <data name="FocusChannelParty" xml:space="preserve">
+    <value>Party</value>
+  </data>
+  <data name="FocusChannelCrossParty" xml:space="preserve">
+    <value>Cross-world party</value>
+  </data>
+  <data name="FocusChannelAlliance" xml:space="preserve">
+    <value>Alliance</value>
+  </data>
+  <data name="FocusChannelFreeCompany" xml:space="preserve">
+    <value>Free company</value>
+  </data>
+  <data name="FocusChannelPvPTeam" xml:space="preserve">
+    <value>PvP team</value>
+  </data>
+  <data name="FocusChannelNoviceNetwork" xml:space="preserve">
+    <value>Novice network</value>
+  </data>
+  <data name="FocusChannelLinkshell" xml:space="preserve">
+    <value>Linkshell {0}</value>
+  </data>
+  <data name="FocusChannelCrossLinkshell" xml:space="preserve">
+    <value>Cross-world linkshell {0}</value>
+  </data>
+  <data name="CposeOutOfRange" xml:space="preserve">
+    <value>Sidekick: for {0}, choose a pose from 1 to {1}.</value>
+  </data>
+  <data name="CposeBlocked" xml:space="preserve">
+    <value>Sidekick: cannot change pose right now. Stop moving and finish any current action before trying again.</value>
+  </data>
+  <data name="CposeUnavailable" xml:space="preserve">
+    <value>Sidekick: the native change-pose emote could not be identified on this game version.</value>
+  </data>
+  <data name="CposeCancelled" xml:space="preserve">
+    <value>Sidekick: pose selection cancelled because the character, area or posture changed.</value>
+  </data>
+  <data name="CposeNotConfirmed" xml:space="preserve">
+    <value>Sidekick: the requested pose could not be confirmed. No additional change-pose emotes were sent.</value>
+  </data>
+  <data name="CposeFailed" xml:space="preserve">
+    <value>Sidekick: pose selection failed. See /xllog for the technical error.</value>
+  </data>
+  <data name="CposeStanding" xml:space="preserve">
+    <value>standing</value>
+  </data>
+  <data name="CposeWeaponDrawn" xml:space="preserve">
+    <value>weapon drawn</value>
+  </data>
+  <data name="CposeSitting" xml:space="preserve">
+    <value>sitting on furniture</value>
+  </data>
+  <data name="CposeGroundSitting" xml:space="preserve">
+    <value>sitting on the ground</value>
+  </data>
+  <data name="CposeDozing" xml:space="preserve">
+    <value>lying down</value>
+  </data>
+  <data name="CposeUmbrella" xml:space="preserve">
+    <value>umbrella</value>
+  </data>
+  <data name="CposeAccessory" xml:space="preserve">
+    <value>fashion accessory</value>
+  </data>
+  <data name="CommandsTab" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="PreferencesTab" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="CommandsIntro" xml:space="preserve">
+    <value>Commands for Sidekick and its modules.</value>
+  </data>
+  <data name="ChatIntro" xml:space="preserve">
+    <value>Highlights mentions of your current character's first or last name, along with saved words and phrases assigned to a character or the account.</value>
+  </data>
+  <data name="FocusIntro" xml:space="preserve">
+    <value>Filters chat by range and/or selected participants by reducing the opacity of unwanted messages.</value>
+  </data>
+  <data name="ModRulesIntro" xml:space="preserve">
+    <value>Create rules for locations to enable, disable or Toggle mods, including modded furniture.</value>
+  </data>
+  <data name="CommandsGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="CommandsEmotes" xml:space="preserve">
+    <value>Emotes</value>
+  </data>
+  <data name="CommandsAliasesHelp" xml:space="preserve">
+    <value>/sidekick also accepts every module command shown with /sk below.</value>
+  </data>
+  <data name="CommandOpen" xml:space="preserve">
+    <value>Open or close the Sidekick window.</value>
+  </data>
+  <data name="CommandCposeGeneric" xml:space="preserve">
+    <value>Select pose N for the current posture, starting at 1.</value>
+  </data>
+  <data name="CommandCpose" xml:space="preserve">
+    <value>Switch to pose {0}.</value>
+  </data>
+  <data name="CommandsEmotesHelp" xml:space="preserve">
+    <value>Examples 1 to 7 cover standing poses. The available range depends on your current posture. A number may be unavailable when sitting or lying down; Sidekick then displays the valid range.</value>
+  </data>
+  <data name="CommandFocusToggle" xml:space="preserve">
+    <value>Toggle Focus.</value>
+  </data>
+  <data name="CommandFocusOn" xml:space="preserve">
+    <value>Enable Focus.</value>
+  </data>
+  <data name="CommandFocusOff" xml:space="preserve">
+    <value>Disable Focus.</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Copy command</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageFrench" xml:space="preserve">
+    <value>Français</value>
+  </data>
+  <data name="ResetSettings" xml:space="preserve">
+    <value>Reset settings</value>
+  </data>
+  <data name="ResetChat" xml:space="preserve">
+    <value>Reset chat settings</value>
+  </data>
+  <data name="ResetChatHelp" xml:space="preserve">
+    <value>Enable highlighting and restore its default color. Saved keywords, Focus, Penumbra rules and language are preserved.</value>
+  </data>
+  <data name="ResetFocus" xml:space="preserve">
+    <value>Reset Focus settings</value>
+  </data>
+  <data name="ResetFocusHelp" xml:space="preserve">
+    <value>Disable Focus and restore its default channels, range, opacity and criteria. Saved participants, chat settings, Penumbra rules and language are preserved.</value>
+  </data>
+</root>

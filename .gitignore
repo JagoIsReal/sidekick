@@ -1,0 +1,41 @@
+# Local agent instructions and tools
+AGENTS.md
+agents.md
+.agents/
+.codex/
+.tools/
+
+# IDE and user settings
+.idea/
+.vs/
+.vscode/
+*.iml
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+
+# Build outputs and test results
+[Bb]in/
+[Oo]bj/
+/artifacts/
+[Tt]est[Rr]esults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Logs, temporary files and OS metadata
+*.log
+*.tmp
+*.bak
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
