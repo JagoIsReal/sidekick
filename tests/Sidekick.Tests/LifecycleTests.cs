@@ -1,9 +1,11 @@
 using Dalamud.Game.Chat;
+using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using Sidekick.Chat;
+using Sidekick.Keywords;
 using Sidekick.Player;
 using Moq;
 using Lumina.Excel;
@@ -103,6 +105,39 @@ public sealed class LifecycleTests
         message.Object.Message = original;
         chat.Raise(x => x.CheckMessageHandled += null, message.Object);
         Assert.Same(original, message.Object.Message);
+    }
+
+    [Theory]
+    [InlineData("Ann", true, false)]
+    [InlineData("Example", true, false)]
+    [InlineData("Ann Example", true, false)]
+    [InlineData("ANN", true, false)]
+    [InlineData("Ann", false, true)]
+    [InlineData("Example", false, true)]
+    [InlineData("Ann Example", false, true)]
+    [InlineData("Ann sunflower", true, true)]
+    [InlineData("sunflower", true, true)]
+    public void AutomaticNameMentionsIgnoreTheirAuthorButSavedKeywordsStillApply(string text, bool own, bool expected)
+    {
+        var client = new Mock<IClientState>();
+        var player = new Mock<IPlayerState>();
+        var chat = new Mock<IChatGui>();
+        client.SetupGet(x => x.IsLoggedIn).Returns(true);
+        player.SetupGet(x => x.IsLoaded).Returns(true);
+        player.SetupGet(x => x.CharacterName).Returns("Ann Example");
+        using var tracker = new LocalCharacterTracker(client.Object, player.Object, Mock.Of<IFramework>());
+        var configuration = new Configuration();
+        configuration.Keywords.TrySave(KeywordProfile.Global, "sunflower");
+        var original = new SeString(new TextPayload(text));
+        var message = new Mock<IHandleableChatMessage>();
+        message.SetupProperty(x => x.Message, original);
+        message.SetupGet(x => x.SourceKind).Returns(own ? XivChatRelationKind.LocalPlayer : default);
+        using var subscription = new ChatSubscription(chat.Object, Mock.Of<IPluginLog>(), new ChatHighlighter(configuration), tracker);
+
+        chat.Raise(x => x.CheckMessageHandled += null, message.Object);
+
+        Assert.Equal(expected, !ReferenceEquals(original, message.Object.Message));
+        message.Verify(x => x.PreventOriginal(), Times.Never);
     }
 
     [Fact]

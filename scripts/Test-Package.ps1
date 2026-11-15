@@ -60,7 +60,8 @@ try {
     if ([Convert]::ToBase64String($iconBytes) -ne [Convert]::ToBase64String([IO.File]::ReadAllBytes($iconPath))) {
         throw 'Packaged icon differs from the source icon.'
     }
-    if ([string]::IsNullOrWhiteSpace($manifest.Author)) { throw 'Packaged manifest is missing its author label.' }
+    if ($manifest.Author -ne [string]$project.Project.PropertyGroup.Author) { throw 'Packaged author does not match the project.' }
+    if ($manifest.RepoUrl -ne [string]$project.Project.PropertyGroup.RepoUrl) { throw 'Packaged source URL does not match the project.' }
     $manifest
 }
 finally {

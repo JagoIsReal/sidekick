@@ -1,4 +1,5 @@
 using Dalamud.Game.Chat;
+using Dalamud.Game.Text;
 using Dalamud.Plugin.Services;
 using Sidekick.Player;
 using Sidekick.Focus;
@@ -36,7 +37,8 @@ internal sealed class ChatSubscription : IDisposable
         {
             character.Refresh();
             var original = message.Message;
-            var result = highlighter.Transform(original, character.Current);
+            var result = highlighter.Transform(original, character.Current,
+                message.SourceKind == XivChatRelationKind.LocalPlayer);
             if (focus is not null)
                 result = focus.Transform(message, result);
             if (!ReferenceEquals(original, result))

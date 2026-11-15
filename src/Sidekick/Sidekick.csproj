@@ -1,11 +1,11 @@
 <Project Sdk="Dalamud.NET.Sdk/15.0.0">
   <PropertyGroup>
-    <Version>0.10.1.0</Version>
+    <Version>0.10.2.0</Version>
     <AssemblyName>Sidekick</AssemblyName>
     <RootNamespace>Sidekick</RootNamespace>
     <Name>Sidekick</Name>
-    <!-- Replaced with the real author via -p:Author when preparing a public release. -->
-    <Author Condition="'$(Author)' == ''">Local build</Author>
+    <Author>Jago</Author>
+    <RepoUrl>https://github.com/JagoIsReal/sidekick</RepoUrl>
     <Punchline>Your personal FFXIV toolbox.</Punchline>
     <Description>A personal toolbox for FFXIV. Open with /sidekick or /sk.</Description>
     <IconUrl>https://www.aht.li/3997968/icon.png</IconUrl>

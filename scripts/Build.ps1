@@ -36,6 +36,10 @@ try {
     $hash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
     [IO.File]::WriteAllText("$destination.sha256", "$hash  $fileName`n", (New-Object Text.UTF8Encoding($false)))
 
+    $repositoryPath = Join-Path $artifacts 'repo.json'
+    & (Join-Path $PSScriptRoot 'New-RepositoryManifest.ps1') -PackagePath $destination -OutputPath $repositoryPath
+    & (Join-Path $PSScriptRoot 'Test-Release.ps1') -PackagePath $destination -RepositoryPath $repositoryPath
+
     Write-Output "Validated local package: $destination"
     Write-Output "SHA256: $hash"
 }
