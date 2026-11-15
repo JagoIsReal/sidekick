@@ -1,0 +1,5 @@
+# Match .editorconfig on every platform, including Windows checkouts.
+* text=auto eol=lf
+
+# Keep binary assets unchanged.
+*.png binary
