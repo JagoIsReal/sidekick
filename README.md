@@ -30,7 +30,7 @@ The **Commands** tab contains the full command reference. `/sidekick` accepts th
 
 ## Installation
 
-Requires Dalamud. After the first release is published, add this URL in **Dalamud Settings → Experimental → Custom Plugin Repositories**, then install Sidekick from `/xlplugins`:
+Requires Dalamud. Add this URL in **Dalamud Settings → Experimental → Custom Plugin Repositories**, then install Sidekick from `/xlplugins`:
 
 ```text
 https://github.com/JagoIsReal/sidekick/releases/latest/download/repo.json
