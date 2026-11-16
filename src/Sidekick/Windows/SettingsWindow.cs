@@ -13,6 +13,7 @@ using Sidekick.Localization;
 using Sidekick.Player;
 using Sidekick.Mods;
 using Sidekick.Focus;
+using Sidekick.Appearance;
 
 namespace Sidekick.Windows;
 
@@ -24,6 +25,7 @@ internal sealed class SettingsWindow : Window
     private readonly KeywordSettingsPanel keywords;
     private readonly ModRulesPanel mods;
     private readonly FocusSettingsPanel focusPanel;
+    private readonly GlamourerRulesPanel glamourerPanel;
     private readonly LocationChoices choices;
     private readonly CommandsPanel commands = new();
     private readonly PreferencesPanel preferences;
@@ -35,7 +37,7 @@ internal sealed class SettingsWindow : Window
     private bool previewEdited;
 
     public SettingsWindow(ConfigurationStore store, LocalCharacterTracker character, ChatHighlighter highlighter,
-        IDataManager data, ModRuleController modRules, FocusController focus, Action? languageChanged = null)
+        IDataManager data, ModRuleController modRules, FocusController focus, GlamourerRuleController glamourer, Action? languageChanged = null)
         : base($"{Strings.SettingsTitle}###Sidekick.Settings")
     {
         this.store = store;
@@ -44,7 +46,9 @@ internal sealed class SettingsWindow : Window
         this.languageChanged = languageChanged;
         choices = new LocationChoices(data);
         keywords = new KeywordSettingsPanel(store, character, choices);
-        mods = new ModRulesPanel(store, modRules, choices);
+        var profiles = new RuleProfilesPanel(store, choices, character);
+        mods = new ModRulesPanel(store, modRules, choices, profiles);
+        glamourerPanel = new GlamourerRulesPanel(store, glamourer, profiles, choices);
         focusPanel = new FocusSettingsPanel(store, focus, choices);
         preferences = new PreferencesPanel(store, SetLanguage);
         Size = new Vector2(820, 760);
@@ -65,11 +69,12 @@ internal sealed class SettingsWindow : Window
         else if (store.SaveFailed)
             Ui.Wrapped(Strings.ConfigurationSaveError);
 
-        if (!ImGui.BeginTabBar("###Sidekick.Tabs"))
+        if (!ImGui.BeginTabBar("###Sidekick.Tabs", ImGuiTabBarFlags.FittingPolicyScroll))
             return;
         DrawTab("Chat", Strings.ChatTab, DrawChat);
         DrawTab("Focus", Strings.FocusTab, focusPanel.Draw);
         DrawTab("ModRules", Strings.ModRulesTab, mods.Draw, false);
+        DrawTab("Glamourer", Strings.GlamourerTab, glamourerPanel.Draw, false);
         DrawTab("Commands", Strings.CommandsTab, commands.Draw);
         DrawTab("Preferences", Strings.PreferencesTab, preferences.Draw);
         ImGui.EndTabBar();

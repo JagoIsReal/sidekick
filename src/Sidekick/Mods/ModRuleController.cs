@@ -1,5 +1,6 @@
 using Dalamud.Plugin.Services;
 using Sidekick.Locations;
+using Sidekick.Rules;
 
 namespace Sidekick.Mods;
 
@@ -12,8 +13,7 @@ internal sealed class ModRuleController : IDisposable
     private readonly IPenumbraGateway penumbra;
     private readonly ModRuleEngine engine;
     private long nextPoll;
-    private long stableSince;
-    private LocationSnapshot? candidate;
+    private readonly StableRuleContext stable = new();
     private bool errorLogged;
     private bool disposed;
     internal LocationSnapshot? Current { get; private set; }
@@ -26,14 +26,14 @@ internal sealed class ModRuleController : IDisposable
     private bool refreshLists = true;
 
     internal ModRuleController(IFramework framework, IPluginLog log, ILocationReader reader,
-        IPenumbraGateway penumbra, ModRuleSettings settings)
+        IPenumbraGateway penumbra, ModRuleSettings settings, RuleProfileSettings? profiles = null)
     {
         this.framework = framework;
         this.log = log;
         this.reader = reader;
         this.penumbra = penumbra;
         this.settings = settings;
-        engine = new ModRuleEngine(settings, penumbra);
+        engine = new ModRuleEngine(settings, penumbra, profiles);
         framework.Update += Update;
     }
 
@@ -87,25 +87,12 @@ internal sealed class ModRuleController : IDisposable
             if (transitioning)
             {
                 Current = null;
-                candidate = null;
-                stableSince = now;
+                stable.Ready(null, true, now);
                 if (!settings.Enabled)
                     engine.Update(null, null);
                 return;
             }
-            if (location is not null && candidate != location)
-            {
-                candidate = location;
-                stableSince = now;
-                return;
-            }
-            if (location is not null && now - stableSince < 1000)
-                return;
-            if (location is null)
-            {
-                candidate = null;
-                stableSince = now;
-            }
+            if (!stable.Ready(location, false, now)) return;
             engine.Update(location, location is null ? null : penumbra.CurrentCollection());
             Failed = engine.CleanupPending;
             if (Failed && !errorLogged)

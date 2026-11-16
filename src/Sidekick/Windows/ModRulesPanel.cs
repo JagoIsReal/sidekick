@@ -13,18 +13,21 @@ internal sealed class ModRulesPanel
     private readonly ConfigurationStore store;
     private readonly ModRuleController controller;
     private readonly LocationChoices choices;
-    private readonly Dictionary<string, string> selectorSearch = new(StringComparer.Ordinal);
+    private readonly RuleConditionsPanel conditions;
+    private readonly RuleProfilesPanel profiles;
     private ModLocationRule? draft;
     private Guid? editing;
     private string search = "";
     private string collectionSearch = "";
     private bool invalid;
 
-    internal ModRulesPanel(ConfigurationStore store, ModRuleController controller, LocationChoices choices)
+    internal ModRulesPanel(ConfigurationStore store, ModRuleController controller, LocationChoices choices, RuleProfilesPanel profiles)
     {
         this.store = store;
         this.controller = controller;
         this.choices = choices;
+        this.profiles = profiles;
+        conditions = new RuleConditionsPanel(choices);
     }
 
     internal void Draw()
@@ -36,6 +39,7 @@ internal sealed class ModRulesPanel
             return;
         }
         var settings = store.Value.ModRules;
+        profiles.Draw();
         var enabled = settings.Enabled;
         if (ImGui.Checkbox($"{Strings.EnableModRules}###Sidekick.ModRules.Enabled", ref enabled))
         {
@@ -68,11 +72,11 @@ internal sealed class ModRulesPanel
             ImGui.EndTable();
         }
 
-        Ui.Section("Rules", Strings.SavedRules, Strings.ModRuleOrderHelp);
+        Ui.Section("Rules", Strings.SavedRules, Strings.RuleProfileOrderHelp);
         ImGui.BeginDisabled(settings.Rules.Count >= ModRuleSettings.MaxRules);
         if (Ui.IconButton("Sidekick.ModRules.Add", FontAwesomeIcon.Plus, Strings.AddModRule, true))
         {
-            draft = new ModLocationRule();
+            draft = new ModLocationRule { ProfileId = profiles.Selected };
             editing = null;
             invalid = false;
         }
@@ -89,7 +93,8 @@ internal sealed class ModRulesPanel
     private void DrawRules()
     {
         var settings = store.Value.ModRules;
-        if (settings.Rules.Count == 0)
+        var visible = settings.Rules.Where(r => r.ProfileId == profiles.Selected).ToArray();
+        if (visible.Length == 0)
         {
             Ui.Muted(Strings.NoModRules);
             return;
@@ -103,9 +108,9 @@ internal sealed class ModRulesPanel
         var actionsWidth = ImGui.GetFrameHeight() * 4 + Ui.Gap * 3;
         ImGui.TableSetupColumn(Strings.Actions, ImGuiTableColumnFlags.WidthFixed, actionsWidth);
         ImGui.TableHeadersRow();
-        for (var i = 0; i < settings.Rules.Count; i++)
+        for (var i = 0; i < visible.Length; i++)
         {
-            var rule = settings.Rules[i];
+            var rule = visible[i];
             ImGui.PushID(rule.Id.ToString());
             ImGui.TableNextRow();
             ImGui.TableSetColumnIndex(0);
@@ -134,22 +139,22 @@ internal sealed class ModRulesPanel
             ImGui.BeginDisabled(i == 0);
             if (Ui.IconButton("Up", FontAwesomeIcon.ArrowUp, Strings.MoveUp))
             {
-                (settings.Rules[i - 1], settings.Rules[i]) = (settings.Rules[i], settings.Rules[i - 1]);
+                Move(rule, visible[i - 1]);
                 Save();
                 reordered = true;
             }
             ImGui.EndDisabled();
             ImGui.SameLine();
-            ImGui.BeginDisabled(i == settings.Rules.Count - 1);
+            ImGui.BeginDisabled(i == visible.Length - 1);
             if (Ui.IconButton("Down", FontAwesomeIcon.ArrowDown, Strings.MoveDown))
             {
-                (settings.Rules[i + 1], settings.Rules[i]) = (settings.Rules[i], settings.Rules[i + 1]);
+                Move(rule, visible[i + 1]);
                 Save();
                 reordered = true;
             }
             ImGui.EndDisabled();
             ImGui.SameLine();
-            var remove = Ui.IconButton("Remove", FontAwesomeIcon.Trash, Strings.Remove);
+            var remove = Ui.CtrlIconButton("Remove", FontAwesomeIcon.Trash, Strings.Remove);
             ImGui.PopID();
             if (reordered && !remove)
                 break;
@@ -168,6 +173,7 @@ internal sealed class ModRulesPanel
     {
         var rule = draft!;
         Ui.Section("RuleEditor", editing.HasValue ? Strings.EditRule : Strings.NewRule, Strings.RuleDraftHelp);
+        rule.ProfileId = profiles.SelectForRule("ModRule.Profile", rule.ProfileId);
         Ui.Label("RuleName", Strings.RuleName);
         var name = rule.Name;
         ImGui.InputText("###Sidekick.ModRules.Name", ref name, 81);
@@ -220,51 +226,7 @@ internal sealed class ModRulesPanel
             draft = null;
     }
 
-    private void DrawLocation(ModLocationRule rule)
-    {
-        if (Ui.Section("Location", Strings.LocationSection, Strings.LocationFiltersHelp,
-            FontAwesomeIcon.Crosshairs, Strings.UseCurrentLocation, controller.Current is not null)
-            && controller.Current is { } current)
-            rule.Location = LocationCondition.Capture(current);
-        var filter = rule.Location;
-        filter.WorldId = SelectId(Strings.CurrentWorld, "World", filter.WorldId, choices.Worlds);
-        filter.TerritoryId = SelectId(Strings.Territory, "Territory", filter.TerritoryId, choices.Territories);
-        filter.PublicInstanceId = (uint?)Number(Strings.PublicInstance, "Instance", (int?)filter.PublicInstanceId, 9);
-
-        Ui.Section("Housing", Strings.HousingSection, Strings.HousingHelp);
-        filter.HousingDistrictId = SelectId(Strings.HousingDistrict, "District", filter.HousingDistrictId, choices.Districts);
-        if (ImGui.BeginTable("###AddressNumbers", 3, ImGuiTableFlags.SizingStretchProp))
-        {
-            ImGui.TableSetupColumn("Ward", ImGuiTableColumnFlags.WidthFixed,
-                Math.Max(64 * Ui.Scale, ImGui.CalcTextSize(Strings.Ward).X));
-            ImGui.TableSetupColumn("Plot", ImGuiTableColumnFlags.WidthFixed,
-                Math.Max(64 * Ui.Scale, ImGui.CalcTextSize(Strings.Plot).X));
-            ImGui.TableSetupColumn("Division", ImGuiTableColumnFlags.WidthStretch);
-            ImGui.TableNextRow();
-            ImGui.TableSetColumnIndex(0);
-            filter.Ward = Number(Strings.Ward, "Ward", filter.Ward, 30, true);
-            ImGui.TableSetColumnIndex(1);
-            filter.Plot = Number(Strings.Plot, "Plot", filter.Plot, 60, true);
-            ImGui.TableSetColumnIndex(2);
-            Ui.Label("Division", Strings.HousingDivision);
-            var division = filter.Division ?? 0;
-            if (Ui.Combo("Division", ref division, new[] { Strings.AnyLocation, Strings.MainDivision, Strings.Subdivision }))
-                filter.Division = division == 0 ? null : division;
-            ImGui.EndTable();
-        }
-        if (ImGui.BeginTable("###RoomAndArea", 2, ImGuiTableFlags.SizingStretchSame))
-        {
-            ImGui.TableNextRow();
-            ImGui.TableSetColumnIndex(0);
-            filter.Room = Number(Strings.Room, "Room", filter.Room, 1023);
-            ImGui.TableSetColumnIndex(1);
-            Ui.Label("Area", Strings.HousingArea);
-            var indoors = filter.Indoors.HasValue ? filter.Indoors.Value ? 2 : 1 : 0;
-            if (Ui.Combo("Indoors", ref indoors, new[] { Strings.AnyLocation, Strings.Outdoors, Strings.Indoors }))
-                filter.Indoors = indoors == 0 ? null : indoors == 2;
-            ImGui.EndTable();
-        }
-    }
+    private void DrawLocation(ModLocationRule rule) => rule.Location = conditions.Draw(rule.Location, controller.Current);
 
     private void DrawModSelection(ModLocationRule rule)
     {
@@ -333,23 +295,6 @@ internal sealed class ModRulesPanel
         ImGui.EndChild();
     }
 
-    private uint? SelectId(string label, string id, uint? selected, (uint Id, string Name)[] entries)
-    {
-        Ui.Label(id, label);
-        var query = selectorSearch.GetValueOrDefault(id) ?? "";
-        var result = Ui.SelectId(id, selected, entries, ref query, Strings.AnyLocation, Strings.SearchLocations);
-        selectorSearch[id] = query;
-        return result;
-    }
-
-    private static int? Number(string label, string id, int? selected, int maximum, bool compact = false)
-    {
-        Ui.Label(id, label);
-        var value = selected ?? 0;
-        return ImGui.InputInt($"###{id}", ref value, compact ? 0 : 1, compact ? 0 : 100)
-            ? value == 0 ? null : Math.Clamp(value, 1, maximum) : selected;
-    }
-
     private string CollectionName(Guid? id) => id.HasValue
         ? controller.Collections.GetValueOrDefault(id.Value) ?? Strings.MissingCollection : Strings.CurrentCharacterCollection;
 
@@ -393,5 +338,13 @@ internal sealed class ModRulesPanel
         store.Value.ModRules.Changed();
         store.Save();
         controller.Refresh();
+    }
+
+    private void Move(ModLocationRule rule, ModLocationRule other)
+    {
+        var rules = store.Value.ModRules.Rules;
+        var first = rules.IndexOf(rule);
+        var second = rules.IndexOf(other);
+        (rules[first], rules[second]) = (rules[second], rules[first]);
     }
 }

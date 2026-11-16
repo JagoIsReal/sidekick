@@ -2,6 +2,7 @@ using Dalamud.Game;
 using Dalamud.Plugin.Services;
 using Lumina.Excel.Sheets;
 using Sidekick.Localization;
+using Sidekick.Rules;
 
 namespace Sidekick.Windows;
 
@@ -12,6 +13,10 @@ internal sealed class LocationChoices
     internal (uint Id, string Name)[] Worlds { get; private set; } = [];
     internal (uint Id, string Name)[] Territories { get; private set; } = [];
     internal (uint Id, string Name)[] Districts { get; private set; } = [];
+    internal (uint Id, string Name)[] Weathers { get; private set; } = [];
+    internal (uint Id, string Name)[] OnlineStatuses { get; private set; } = [];
+    internal RuleOptionGroup[] WeatherGroups { get; private set; } = [];
+    internal RuleOptionGroup[] StatusGroups { get; private set; } = [];
 
     internal LocationChoices(IDataManager data)
     {
@@ -31,6 +36,19 @@ internal sealed class LocationChoices
             .OrderBy(t => t.Item2, StringComparer.OrdinalIgnoreCase).ThenBy(t => t.RowId).ToArray();
         Districts = zones.Where(t => t.TerritoryIntendedUse.RowId == 13)
             .Select(t => (t.RowId, t.PlaceName.Value.Name.ExtractText())).ToArray();
+        Weathers = data.GetExcelSheet<Weather>(language).Where(w => w.RowId is > 0 and <= byte.MaxValue && !w.Name.IsEmpty)
+            .Select(w => (w.RowId, w.Name.ExtractText())).OrderBy(w => w.Item2, StringComparer.OrdinalIgnoreCase).ToArray();
+        WeatherGroups = RuleOptionGroup.Create(Weathers);
+        var statuses = data.GetExcelSheet<OnlineStatus>(language).Where(s => s.List && s.RowId <= byte.MaxValue && !s.Name.IsEmpty)
+            .Select(s => (s.RowId, s.Name.ExtractText())).ToList();
+        // Native status 0 means no special status for a loaded local actor. The sheet's
+        // named Online row also represents it in social lists; present both as one choice.
+        var onlineId = data.GetExcelSheet<OnlineStatus>(ClientLanguage.English)
+            .FirstOrDefault(s => s.Name.ExtractText() == "Online").RowId;
+        var onlineName = statuses.FirstOrDefault(s => s.RowId == onlineId).Item2;
+        if (!string.IsNullOrWhiteSpace(onlineName)) statuses.Add((0, onlineName));
+        OnlineStatuses = statuses.ToArray();
+        StatusGroups = RuleOptionGroup.Create(OnlineStatuses);
         culture = Strings.Culture.Name;
     }
 

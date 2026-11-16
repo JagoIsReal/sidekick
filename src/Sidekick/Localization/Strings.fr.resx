@@ -135,7 +135,7 @@
     <value>Activer les règles de lieu</value>
   </data>
   <data name="ModRulesHelp" xml:space="preserve">
-    <value>Chaque règle applique des réglages temporaires à sa collection Penumbra lorsque le lieu correspond. En quittant le lieu, en désactivant les règles ou en déchargeant Sidekick, ses réglages temporaires sont retirés. Les réglages permanents restent conservés.</value>
+    <value>Chaque règle applique des réglages temporaires à sa collection Penumbra lorsque ses conditions correspondent. Quand elles cessent de correspondre, en désactivant les règles ou en déchargeant Sidekick, ses réglages temporaires sont retirés. Les réglages permanents restent conservés.</value>
   </data>
   <data name="PenumbraReady" xml:space="preserve">
     <value>La connexion IPC avec Penumbra est disponible.</value>
@@ -239,7 +239,7 @@
     <value>Rechercher un mod</value>
   </data>
   <data name="ModRuleInvalid" xml:space="preserve">
-    <value>Renseignez un nom de 1 à 80 caractères, au moins une condition de lieu et de 1 à 64 mods. Vous pouvez enregistrer jusqu’à 64 règles.</value>
+    <value>Renseignez un nom de 1 à 80 caractères, au moins une condition valide et de 1 à 64 mods. Vous pouvez enregistrer jusqu’à 64 règles.</value>
   </data>
   <data name="SaveModRule" xml:space="preserve">
     <value>Enregistrer</value>
@@ -583,7 +583,7 @@ Instance {2} · Secteur {3} · Parcelle {4} · Pièce {5}</value>
     <value>Filtre par portée et / ou par participants sélectionnés les messages du chat en réduisant l’opacité des messages non désirés.</value>
   </data>
   <data name="ModRulesIntro" xml:space="preserve">
-    <value>Permet la création de règles liées aux lieux pour activer / désactiver / Toggle des mods, notamment les meubles moddés.</value>
+    <value>Active / désactive / Toggle des mods avec des règles de profil liées aux lieux, à la météo et à l’activité, notamment les meubles moddés.</value>
   </data>
   <data name="CommandsGeneral" xml:space="preserve">
     <value>Général</value>
@@ -641,5 +641,143 @@ Instance {2} · Secteur {3} · Parcelle {4} · Pièce {5}</value>
   </data>
   <data name="ResetFocusHelp" xml:space="preserve">
     <value>Désactive Focus et restaure ses canaux, sa portée, son opacité et ses critères par défaut. Les participants enregistrés, les réglages du chat, les règles Penumbra et la langue sont conservés.</value>
+  </data>
+  <data name="RuleProfile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="RuleProfilesHelp" xml:space="preserve">
+    <value>Les règles Compte s’appliquent à tous les personnages de cette configuration locale. Les profils Personnage utilisent le nom complet et le monde d’origine. La sélection change seulement les règles affichées dans l’éditeur.</value>
+  </data>
+  <data name="MissingRuleProfile" xml:space="preserve">
+    <value>Profil manquant</value>
+  </data>
+  <data name="AddRuleProfile" xml:space="preserve">
+    <value>Ajouter un profil de personnage</value>
+  </data>
+  <data name="EditRuleProfile" xml:space="preserve">
+    <value>Profil de personnage</value>
+  </data>
+  <data name="RuleProfileInUse" xml:space="preserve">
+    <value>Déplacez ou supprimez les règles de ce profil avant de le supprimer.</value>
+  </data>
+  <data name="RuleProfileInactive" xml:space="preserve">
+    <value>Ce profil n’est pas actif pour le personnage connecté. Ses règles restent modifiables.</value>
+  </data>
+  <data name="RuleProfileInvalid" xml:space="preserve">
+    <value>Saisissez un nom complet et un monde d’origine valides. Un profil pour ce personnage ne doit pas déjà exister.</value>
+  </data>
+  <data name="RuleEnvironment" xml:space="preserve">
+    <value>Environnement et activité</value>
+  </data>
+  <data name="RuleConditionsHelp" xml:space="preserve">
+    <value>Toutes les conditions sélectionnées doivent correspondre. Tous ignore une condition. Le jour va de 06:00 à 18:00, heure éorzéenne ; la nuit couvre les autres heures. La nage comprend la plongée. Les changements doivent rester stables pendant une seconde.</value>
+  </data>
+  <data name="RuleProfileOrderHelp" xml:space="preserve">
+    <value>Les règles du personnage ont priorité sur les règles Compte. Dans un profil, la dernière règle correspondante l’emporte.</value>
+  </data>
+  <data name="RuleWeather" xml:space="preserve">
+    <value>Météo</value>
+  </data>
+  <data name="RuleDaytime" xml:space="preserve">
+    <value>Heure éorzéenne</value>
+  </data>
+  <data name="RuleDay" xml:space="preserve">
+    <value>Jour</value>
+  </data>
+  <data name="RuleNight" xml:space="preserve">
+    <value>Nuit</value>
+  </data>
+  <data name="RuleFlying" xml:space="preserve">
+    <value>En vol</value>
+  </data>
+  <data name="RuleSwimming" xml:space="preserve">
+    <value>Nage</value>
+  </data>
+  <data name="RuleDiving" xml:space="preserve">
+    <value>Plongée</value>
+  </data>
+  <data name="RuleMounted" xml:space="preserve">
+    <value>Monture</value>
+  </data>
+  <data name="RuleOnFoot" xml:space="preserve">
+    <value>À pied</value>
+  </data>
+  <data name="RuleYes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="RuleNo" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="RuleUnknown" xml:space="preserve">
+    <value>Indisponible</value>
+  </data>
+  <data name="RuleContextSummary" xml:space="preserve">
+    <value>{0} · {1} · {2}</value>
+  </data>
+  <data name="GlamourerTab" xml:space="preserve">
+    <value>Règles Glamourer</value>
+  </data>
+  <data name="GlamourerIntro" xml:space="preserve">
+    <value>Applique des tenues Glamourer enregistrées avec des règles de personnage ou Compte liées aux lieux, à la météo et à l’activité.</value>
+  </data>
+  <data name="EnableGlamourerRules" xml:space="preserve">
+    <value>Activer les règles Glamourer</value>
+  </data>
+  <data name="GlamourerRestoreHelp" xml:space="preserve">
+    <value>Seul l’équipement est appliqué, sans verrouiller le personnage. À la fin d’une règle, l’apparence précédente est restaurée seulement si elle correspond encore à l’état appliqué par Sidekick. Les changements manuels ou d’un autre plugin sont conservés jusqu’à une nouvelle activation ou un nouvel essai. Un personnage hors ligne ne peut être restauré qu’à son retour, tant que Sidekick reste chargé.</value>
+  </data>
+  <data name="GlamourerUnavailable" xml:space="preserve">
+    <value>Glamourer est indisponible ou sa version IPC n’est pas prise en charge.</value>
+  </data>
+  <data name="GlamourerFailed" xml:space="preserve">
+    <value>Glamourer n’a pas pu appliquer ou restaurer une apparence. Utilisez Actualiser pour réessayer.</value>
+  </data>
+  <data name="GlamourerSkipped" xml:space="preserve">
+    <value>La règle correspondante a été ignorée. Vérifiez le design sélectionné et un éventuel verrouillage Glamourer, puis actualisez pour réessayer.</value>
+  </data>
+  <data name="GlamourerDeferred" xml:space="preserve">
+    <value>Restauration en attente pour {0} personnage(s) hors ligne.</value>
+  </data>
+  <data name="GlamourerPaused" xml:space="preserve">
+    <value>Les changements d’apparence sont suspendus en combat, pendant les cinématiques et en GPose.</value>
+  </data>
+  <data name="GlamourerMissingDesign" xml:space="preserve">
+    <value>Sélectionner un design (le design enregistré peut être indisponible)</value>
+  </data>
+  <data name="GlamourerDesign" xml:space="preserve">
+    <value>Design Glamourer</value>
+  </data>
+  <data name="GlamourerSearchDesigns" xml:space="preserve">
+    <value>Rechercher un design…</value>
+  </data>
+  <data name="GlamourerRuleInvalid" xml:space="preserve">
+    <value>Saisissez un nom de règle, sélectionnez un design et au moins une condition valide.</value>
+  </data>
+  <data name="UseCurrentCharacter" xml:space="preserve">
+    <value>Utiliser le personnage actuel</value>
+  </data>
+  <data name="GlamourerActiveRule" xml:space="preserve">
+    <value>Tenue gérée : {0}</value>
+  </data>
+  <data name="SaveRuleProfile" xml:space="preserve">
+    <value>Enregistrer le profil</value>
+  </data>
+  <data name="CtrlClickAction" xml:space="preserve">
+    <value>{0} (Ctrl + clic)</value>
+  </data>
+  <data name="RuleOnlineStatus" xml:space="preserve">
+    <value>État en ligne</value>
+  </data>
+  <data name="AnyWeather" xml:space="preserve">
+    <value>Toutes les météos</value>
+  </data>
+  <data name="AnyOnlineStatus" xml:space="preserve">
+    <value>Tous les états</value>
+  </data>
+  <data name="RuleSelectionCount" xml:space="preserve">
+    <value>{0} sélection(s)</value>
+  </data>
+  <data name="RuleMultiSelectionHelp" xml:space="preserve">
+    <value>Cochez une ou plusieurs entrées. Une seule des entrées cochées doit correspondre ; les autres conditions de la règle restent nécessaires. Les noms identiques sont regroupés. Une case partielle indique une ancienne sélection limitée à certaines variantes. Choisir Tous efface ce filtre.</value>
   </data>
 </root>

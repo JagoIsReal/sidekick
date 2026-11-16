@@ -11,6 +11,7 @@ using Sidekick.Mods;
 using Sidekick.Focus;
 using Sidekick.Poses;
 using Sidekick.Commands;
+using Sidekick.Appearance;
 
 namespace Sidekick;
 
@@ -28,6 +29,7 @@ public sealed class Plugin : IDalamudPlugin
     private readonly ModRuleController modRules;
     private readonly FocusController focus;
     private readonly CposeController cposes;
+    private readonly GlamourerRuleController glamourerRules;
     private readonly IChatGui chatGui;
     private readonly bool shortCommandRegistered;
     private readonly CommandInfo commandInfo;
@@ -47,9 +49,12 @@ public sealed class Plugin : IDalamudPlugin
         var highlighter = new ChatHighlighter(configuration.Value);
         focus = new FocusController(configuration, new NearbyFocusPlayers(clientState, objects, condition, framework),
             new GameChatColors(gameConfig, data), framework, log);
-        modRules = new ModRuleController(framework, log, new GameLocationReader(clientState, playerState, condition),
-            new PenumbraGateway(pluginInterface, commands), configuration.Value.ModRules);
-        settings = new SettingsWindow(configuration, character, highlighter, data, modRules, focus,
+        var ruleContext = new GameLocationReader(clientState, playerState, condition, objects);
+        modRules = new ModRuleController(framework, log, ruleContext,
+            new PenumbraGateway(pluginInterface, commands), configuration.Value.ModRules, configuration.Value.RuleProfiles);
+        glamourerRules = new GlamourerRuleController(framework, clientState, ruleContext,
+            new GlamourerGateway(pluginInterface, objects), log, configuration.Value.Glamourer, configuration.Value.RuleProfiles);
+        settings = new SettingsWindow(configuration, character, highlighter, data, modRules, focus, glamourerRules,
             () => commandInfo.HelpMessage = Strings.CommandHelp);
         cposes = new CposeController(framework, new GameCpose(framework, clientState, playerState, objects, condition, data, log), chatGui, log);
         windows.AddWindow(settings);
@@ -59,6 +64,7 @@ public sealed class Plugin : IDalamudPlugin
             windows.RemoveAllWindows();
             character.Dispose();
             modRules.Dispose();
+            glamourerRules.Dispose();
             focus.Dispose();
             cposes.Dispose();
             throw new InvalidOperationException("The /sidekick command is already registered.");
@@ -82,6 +88,7 @@ public sealed class Plugin : IDalamudPlugin
         cposes.Dispose();
         focus.Dispose();
         modRules.Dispose();
+        glamourerRules.Dispose();
         character.Dispose();
         pluginInterface.UiBuilder.Draw -= windows.Draw;
         pluginInterface.UiBuilder.OpenConfigUi -= OpenSettings;

@@ -88,7 +88,8 @@ public sealed class HousingLocationTests
         restored.ValidateAndMigrate();
         var saved = Assert.Single(restored.ModRules.Rules);
         Assert.True(saved.Location.Matches(Inside));
-        Assert.Equal(rule.Location, saved.Location);
+        // Selection lists have independent instances after loading; persisted values must stay identical.
+        Assert.Equal(JsonConvert.SerializeObject(rule.Location), JsonConvert.SerializeObject(saved.Location));
         Assert.Equal(rule.Id, saved.Id);
         Assert.Equal(rule.CollectionId, saved.CollectionId);
         Assert.Equal(rule.RefreshMode, saved.RefreshMode);

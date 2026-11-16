@@ -11,6 +11,7 @@ public sealed class ModLocationRule
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = "";
     public bool Enabled { get; set; } = true;
+    public Guid? ProfileId { get; set; }
     public LocationCondition Location { get; set; } = new();
     public ModAction Action { get; set; }
     // Null preserves legacy rules by following the local character's effective collection.
@@ -22,7 +23,7 @@ public sealed class ModLocationRule
 
     internal bool IsValid => !string.IsNullOrWhiteSpace(Name) && Name.Length <= 80
         && !Name.Any(char.IsControl) && Enum.IsDefined(Action) && Location is { IsValid: true }
-        && Enum.IsDefined(RefreshMode) && CollectionId != Guid.Empty
+        && Enum.IsDefined(RefreshMode) && CollectionId != Guid.Empty && ProfileId != Guid.Empty
         && Mods is { Count: > 0 and <= 64 }
         && Mods.All(m => !string.IsNullOrWhiteSpace(m) && m.Length <= 260 && !m.Any(char.IsControl)
             && m.IndexOfAny(['/', '\\', ':']) < 0);
@@ -32,7 +33,8 @@ public sealed class ModLocationRule
         Id = Id,
         Name = Name,
         Enabled = Enabled,
-        Location = Location with { },
+        ProfileId = ProfileId,
+        Location = Location.Copy(),
         Action = Action,
         CollectionId = CollectionId,
         RefreshMode = RefreshMode,
@@ -52,6 +54,7 @@ public sealed class ModRuleSettings
     internal void Validate()
     {
         Rules ??= [];
+        foreach (var rule in Rules) rule?.Location?.NormalizeSelections();
         var ids = new HashSet<Guid>();
         Rules = Rules.Where(r => r is not null && r.IsValid).Take(MaxRules).ToList();
         foreach (var rule in Rules)

@@ -1,6 +1,6 @@
 <Project Sdk="Dalamud.NET.Sdk/15.0.0">
   <PropertyGroup>
-    <Version>0.10.2.0</Version>
+    <Version>0.11.1.0</Version>
     <AssemblyName>Sidekick</AssemblyName>
     <RootNamespace>Sidekick</RootNamespace>
     <Name>Sidekick</Name>
@@ -9,7 +9,7 @@
     <Punchline>Your personal FFXIV toolbox.</Punchline>
     <Description>A personal toolbox for FFXIV. Open with /sidekick or /sk.</Description>
     <IconUrl>https://www.aht.li/3997968/icon.png</IconUrl>
-    <Tags>utility;chat;highlight;mentions;focus;roleplay;cpose;penumbra</Tags>
+    <Tags>utility;chat;highlight;mentions;focus;roleplay;cpose;penumbra;glamourer</Tags>
     <DalamudApiLevel>15</DalamudApiLevel>
     <MinimumDalamudVersion>15.0.3.9</MinimumDalamudVersion>
     <!-- Native UI state must be acquired/released on the framework thread. -->

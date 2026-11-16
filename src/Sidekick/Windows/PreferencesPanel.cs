@@ -31,7 +31,7 @@ internal sealed class PreferencesPanel(ConfigurationStore store, Action<string> 
         ImGui.TextUnformatted(module);
         Ui.Help($"Preferences.Reset.{id}", help);
         ImGui.TableNextColumn();
-        if (Ui.IconButton($"Preferences.Reset.{id}", FontAwesomeIcon.Undo, actionLabel))
+        if (Ui.CtrlIconButton($"Preferences.Reset.{id}", FontAwesomeIcon.Undo, actionLabel))
         {
             reset();
             store.Save();

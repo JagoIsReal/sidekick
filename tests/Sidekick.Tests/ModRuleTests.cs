@@ -3,6 +3,8 @@ using Moq;
 using Newtonsoft.Json;
 using Sidekick.Locations;
 using Sidekick.Mods;
+using Sidekick.Core;
+using Sidekick.Rules;
 
 namespace Sidekick.Tests;
 
@@ -607,6 +609,40 @@ public sealed class ModRuleTests
         Assert.Empty(api.Temporary);
         Assert.Equal(2, api.RefreshRequests.Count);
         Assert.All(api.RefreshRequests, request => Assert.Equal(ModRefreshMode.Furniture, request.Mode));
+    }
+
+    [Fact]
+    public void CharacterEnvironmentRulesOverrideAccountAndRespectHomeWorld()
+    {
+        var profiles = new RuleProfileSettings();
+        var character = CharacterIdentity.FromName("Ann Example", 21)!;
+        var profile = new RuleCharacterProfile { CharacterName = character.DisplayName, HomeWorldId = 21 };
+        profiles.TrySave(profile);
+        var personal = Rule(ModAction.Disable);
+        personal.ProfileId = profile.Id;
+        personal.Location = new() { Swimming = true, WeatherId = 7 };
+        var account = Rule(ModAction.Enable);
+        var api = new FakePenumbra();
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [personal, account] }, api, profiles);
+        var here = Here with { Character = character, Swimming = true, WeatherId = 7, WorldId = 99 };
+        engine.Update(here, Collection);
+        Assert.False(Assert.Single(api.Temporary).Value.Enabled);
+        engine.Update(here with { Character = CharacterIdentity.FromName(character.DisplayName, 22) }, Collection);
+        Assert.True(Assert.Single(api.Temporary).Value.Enabled);
+        engine.Update(here with { Swimming = false }, Collection);
+        Assert.True(Assert.Single(api.Temporary).Value.Enabled);
+        engine.Update(null, null);
+        Assert.Empty(api.Temporary);
+    }
+
+    [Fact]
+    public void MissingProfilesNeverFallBackToAccountRules()
+    {
+        var rule = Rule(); rule.ProfileId = Guid.NewGuid();
+        var api = new FakePenumbra();
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [rule] }, api, new());
+        engine.Update(Here, Collection);
+        Assert.Empty(api.Temporary);
     }
 
     private sealed class FakeLocation : ILocationReader

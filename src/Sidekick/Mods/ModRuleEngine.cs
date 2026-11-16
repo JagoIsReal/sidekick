@@ -1,9 +1,10 @@
 using System.Runtime.ExceptionServices;
 using Sidekick.Locations;
+using Sidekick.Rules;
 
 namespace Sidekick.Mods;
 
-internal sealed class ModRuleEngine(ModRuleSettings settings, IPenumbraGateway penumbra)
+internal sealed class ModRuleEngine(ModRuleSettings settings, IPenumbraGateway penumbra, RuleProfileSettings? profiles = null)
 {
     private sealed record Desired(Guid Rule, ModAction Action, ModRefreshMode RefreshMode);
     private sealed record Held(Desired Desired, ModState State);
@@ -11,6 +12,7 @@ internal sealed class ModRuleEngine(ModRuleSettings settings, IPenumbraGateway p
     private readonly Dictionary<(Guid Collection, string Mod), Desired> attempted = [];
     private readonly HashSet<ModRefreshRequest> pendingRedraw = [];
     private int revision = -1;
+    private int profileRevision = -1;
     internal int ActiveCount => held.Count;
     internal int SkippedCount { get; private set; }
     internal bool CleanupPending { get; private set; }
@@ -19,18 +21,20 @@ internal sealed class ModRuleEngine(ModRuleSettings settings, IPenumbraGateway p
 
     internal void Update(LocationSnapshot? location, Guid? characterCollection)
     {
-        if (revision != settings.Revision)
+        if (revision != settings.Revision || profileRevision != (profiles?.Revision ?? 0))
         {
             attempted.Clear();
             revision = settings.Revision;
+            profileRevision = profiles?.Revision ?? 0;
         }
         var desired = new Dictionary<(Guid Collection, string Mod), Desired>();
         if (settings.Enabled && location is not null)
         {
             // Last matching rule wins per collection/mod, including its refresh policy.
-            foreach (var rule in settings.Rules)
+            foreach (var rule in settings.Rules.OrderBy(r => r.ProfileId.HasValue))
             {
-                if (rule.Enabled && rule.IsValid && rule.Location.Matches(location))
+                if (rule.Enabled && rule.IsValid && rule.Location.Matches(location)
+                    && (rule.ProfileId is null || profiles?.Matches(rule.ProfileId, location.Character) == true))
                 {
                     var target = rule.CollectionId ?? characterCollection;
                     // Never fall back to the character's collection when a target is unavailable.

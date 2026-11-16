@@ -3,6 +3,7 @@ using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
 using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility;
+using Sidekick.Localization;
 
 namespace Sidekick.Windows;
 
@@ -126,6 +127,15 @@ internal static class Ui
         }
         Tooltip(help);
         return clicked;
+    }
+
+    internal static bool CtrlIconButton(string id, FontAwesomeIcon icon, string help)
+    {
+        var ctrl = ImGui.GetIO().KeyCtrl;
+        ImGui.BeginDisabled(!ctrl);
+        var clicked = IconButton(id, icon, string.Format(Strings.Culture, Strings.CtrlClickAction, help));
+        ImGui.EndDisabled();
+        return clicked && ctrl;
     }
 
     internal static bool TextButton(string id, FontAwesomeIcon icon, string text, Vector2 size, bool primary = false)

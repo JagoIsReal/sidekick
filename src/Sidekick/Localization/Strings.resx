@@ -135,7 +135,7 @@
     <value>Enable location rules</value>
   </data>
   <data name="ModRulesHelp" xml:space="preserve">
-    <value>Each rule applies temporary settings to its selected Penumbra collection while the location matches. Leaving the location, pausing the rule or unloading Sidekick removes its overrides. Permanent settings are kept.</value>
+    <value>Each rule applies temporary settings to its selected Penumbra collection while its conditions match. When they stop matching, or rules are paused or Sidekick is unloaded, its overrides are removed. Permanent settings are kept.</value>
   </data>
   <data name="PenumbraReady" xml:space="preserve">
     <value>Penumbra IPC is available.</value>
@@ -239,7 +239,7 @@
     <value>Search mods</value>
   </data>
   <data name="ModRuleInvalid" xml:space="preserve">
-    <value>Enter a rule name (1-80 characters), at least one valid location condition and 1-64 mods. Up to 64 rules can be saved.</value>
+    <value>Enter a rule name (1-80 characters), at least one valid condition and 1-64 mods. Up to 64 rules can be saved.</value>
   </data>
   <data name="SaveModRule" xml:space="preserve">
     <value>Save rule</value>
@@ -582,7 +582,7 @@
     <value>Filters chat by range and/or selected participants by reducing the opacity of unwanted messages.</value>
   </data>
   <data name="ModRulesIntro" xml:space="preserve">
-    <value>Create rules for locations to enable, disable or Toggle mods, including modded furniture.</value>
+    <value>Enable, disable or Toggle mods using profile rules for locations, weather and activity, including modded furniture.</value>
   </data>
   <data name="CommandsGeneral" xml:space="preserve">
     <value>General</value>
@@ -640,5 +640,143 @@
   </data>
   <data name="ResetFocusHelp" xml:space="preserve">
     <value>Disable Focus and restore its default channels, range, opacity and criteria. Saved participants, chat settings, Penumbra rules and language are preserved.</value>
+  </data>
+  <data name="RuleProfile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="RuleProfilesHelp" xml:space="preserve">
+    <value>Account rules apply to every character using this local configuration. Character profiles use the full name and home world. Selecting a profile only changes the rules being edited.</value>
+  </data>
+  <data name="MissingRuleProfile" xml:space="preserve">
+    <value>Missing profile</value>
+  </data>
+  <data name="AddRuleProfile" xml:space="preserve">
+    <value>Add character profile</value>
+  </data>
+  <data name="EditRuleProfile" xml:space="preserve">
+    <value>Character profile</value>
+  </data>
+  <data name="RuleProfileInUse" xml:space="preserve">
+    <value>Move or remove this profile's rules before deleting it.</value>
+  </data>
+  <data name="RuleProfileInactive" xml:space="preserve">
+    <value>This profile is not active for the connected character. You can still edit its rules.</value>
+  </data>
+  <data name="RuleProfileInvalid" xml:space="preserve">
+    <value>Enter a valid full character name and home world. A profile for that character must not already exist.</value>
+  </data>
+  <data name="RuleEnvironment" xml:space="preserve">
+    <value>Environment and activity</value>
+  </data>
+  <data name="RuleConditionsHelp" xml:space="preserve">
+    <value>All selected conditions must match. Any ignores a condition. Day is 06:00 to 18:00 Eorzea time; night covers the remaining hours. Swimming includes diving. Changes must remain stable for one second.</value>
+  </data>
+  <data name="RuleProfileOrderHelp" xml:space="preserve">
+    <value>Character rules take priority over Account rules. Within a profile, the last matching rule wins.</value>
+  </data>
+  <data name="RuleWeather" xml:space="preserve">
+    <value>Weather</value>
+  </data>
+  <data name="RuleDaytime" xml:space="preserve">
+    <value>Eorzea time</value>
+  </data>
+  <data name="RuleDay" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="RuleNight" xml:space="preserve">
+    <value>Night</value>
+  </data>
+  <data name="RuleFlying" xml:space="preserve">
+    <value>Flying</value>
+  </data>
+  <data name="RuleSwimming" xml:space="preserve">
+    <value>Swimming</value>
+  </data>
+  <data name="RuleDiving" xml:space="preserve">
+    <value>Diving</value>
+  </data>
+  <data name="RuleMounted" xml:space="preserve">
+    <value>Mounted</value>
+  </data>
+  <data name="RuleOnFoot" xml:space="preserve">
+    <value>On foot</value>
+  </data>
+  <data name="RuleYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="RuleNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="RuleUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="RuleContextSummary" xml:space="preserve">
+    <value>{0} · {1} · {2}</value>
+  </data>
+  <data name="GlamourerTab" xml:space="preserve">
+    <value>Glamourer rules</value>
+  </data>
+  <data name="GlamourerIntro" xml:space="preserve">
+    <value>Apply saved Glamourer outfits using character or Account rules based on locations, weather and activity.</value>
+  </data>
+  <data name="EnableGlamourerRules" xml:space="preserve">
+    <value>Enable Glamourer rules</value>
+  </data>
+  <data name="GlamourerRestoreHelp" xml:space="preserve">
+    <value>Only equipment is applied, without locking the character. When a rule ends, the previous appearance is restored only if it still matches Sidekick's applied state. Manual or other-plugin changes are preserved until the rule is activated again or retried. An offline character can only be restored after it becomes available again while Sidekick remains loaded.</value>
+  </data>
+  <data name="GlamourerUnavailable" xml:space="preserve">
+    <value>Glamourer is unavailable or its IPC version is unsupported.</value>
+  </data>
+  <data name="GlamourerFailed" xml:space="preserve">
+    <value>Glamourer could not apply or restore an appearance. Use Refresh to retry.</value>
+  </data>
+  <data name="GlamourerSkipped" xml:space="preserve">
+    <value>The matching rule was skipped. Check the selected design and any Glamourer lock, then refresh to retry.</value>
+  </data>
+  <data name="GlamourerDeferred" xml:space="preserve">
+    <value>Pending restoration for {0} offline character(s).</value>
+  </data>
+  <data name="GlamourerPaused" xml:space="preserve">
+    <value>Appearance changes are paused during combat, cutscenes and GPose.</value>
+  </data>
+  <data name="GlamourerMissingDesign" xml:space="preserve">
+    <value>Select a design (saved design may be unavailable)</value>
+  </data>
+  <data name="GlamourerDesign" xml:space="preserve">
+    <value>Glamourer design</value>
+  </data>
+  <data name="GlamourerSearchDesigns" xml:space="preserve">
+    <value>Search designs…</value>
+  </data>
+  <data name="GlamourerRuleInvalid" xml:space="preserve">
+    <value>Enter a rule name, select a design and at least one valid condition.</value>
+  </data>
+  <data name="UseCurrentCharacter" xml:space="preserve">
+    <value>Use current character</value>
+  </data>
+  <data name="GlamourerActiveRule" xml:space="preserve">
+    <value>Managed outfit: {0}</value>
+  </data>
+  <data name="SaveRuleProfile" xml:space="preserve">
+    <value>Save profile</value>
+  </data>
+  <data name="CtrlClickAction" xml:space="preserve">
+    <value>{0} (Ctrl + click)</value>
+  </data>
+  <data name="RuleOnlineStatus" xml:space="preserve">
+    <value>Online status</value>
+  </data>
+  <data name="AnyWeather" xml:space="preserve">
+    <value>Any weather</value>
+  </data>
+  <data name="AnyOnlineStatus" xml:space="preserve">
+    <value>Any status</value>
+  </data>
+  <data name="RuleSelectionCount" xml:space="preserve">
+    <value>{0} selected</value>
+  </data>
+  <data name="RuleMultiSelectionHelp" xml:space="preserve">
+    <value>Select one or more entries. Any selected entry can match; other rule conditions must also match. Identical names are grouped. A mixed checkbox indicates an older selection that includes only some variants. Choosing Any clears this filter.</value>
   </data>
 </root>
