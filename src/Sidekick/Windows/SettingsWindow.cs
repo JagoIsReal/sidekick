@@ -28,6 +28,7 @@ internal sealed class SettingsWindow : Window
     private readonly GlamourerRulesPanel glamourerPanel;
     private readonly LocationChoices choices;
     private readonly CommandsPanel commands = new();
+    private readonly ChangelogPanel changelog = new();
     private readonly PreferencesPanel preferences;
     private readonly Action? languageChanged;
     private string? activeTab;
@@ -76,6 +77,7 @@ internal sealed class SettingsWindow : Window
         DrawTab("ModRules", Strings.ModRulesTab, mods.Draw, false);
         DrawTab("Glamourer", Strings.GlamourerTab, glamourerPanel.Draw, false);
         DrawTab("Commands", Strings.CommandsTab, commands.Draw);
+        DrawTab("Changelog", Strings.ChangelogTab, changelog.Draw);
         DrawTab("Preferences", Strings.PreferencesTab, preferences.Draw);
         ImGui.EndTabBar();
     }

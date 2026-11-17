@@ -779,4 +779,76 @@
   <data name="RuleMultiSelectionHelp" xml:space="preserve">
     <value>Select one or more entries. Any selected entry can match; other rule conditions must also match. Identical names are grouped. A mixed checkbox indicates an older selection that includes only some variants. Choosing Any clears this filter.</value>
   </data>
+  <data name="EarlyApplication" xml:space="preserve">
+    <value>Early application</value>
+  </data>
+  <data name="EarlyApplicationHelp" xml:space="preserve">
+    <value>Attempts to apply mods before the zone loads (e.g. outdoor furniture). Select Default, a residential district, a ward and its division. Leave plot and room on Any, and area on Any or Outdoors.</value>
+  </data>
+  <data name="EarlyApplicationResult" xml:space="preserve">
+    <value>Applied during the last loading screen: {0} mod(s)</value>
+  </data>
+  <data name="ChangelogTab" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="ChangelogIntro" xml:space="preserve">
+    <value>Additions, changes and removals in each version of Sidekick.</value>
+  </data>
+  <data name="ChangelogCurrentVersion" xml:space="preserve">
+    <value>Current version</value>
+  </data>
+  <data name="ChangelogAdded" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="ChangelogChanged" xml:space="preserve">
+    <value>Changed</value>
+  </data>
+  <data name="ChangelogRemoved" xml:space="preserve">
+    <value>Removed</value>
+  </data>
+  <data name="ChangelogEarlyApplication" xml:space="preserve">
+    <value>Optional early application of outdoor housing mods during zone loading, with a counter for the last loading screen.</value>
+  </data>
+  <data name="ChangelogHistory" xml:space="preserve">
+    <value>Changelog tab with version history in English and French.</value>
+  </data>
+  <data name="ChangelogEarlyHelp" xml:space="preserve">
+    <value>Shorter tooltip explaining how to configure early application.</value>
+  </data>
+  <data name="ChangelogGlamourer" xml:space="preserve">
+    <value>Conditional Glamourer outfits, with restoration of the previous appearance while preserving manual changes.</value>
+  </data>
+  <data name="ChangelogProfiles" xml:space="preserve">
+    <value>Shared Account and character profiles for Glamourer and Penumbra rules.</value>
+  </data>
+  <data name="ChangelogConditions" xml:space="preserve">
+    <value>Conditions for weather, Eorzea day or night, flying, mounts, swimming, diving and online status.</value>
+  </data>
+  <data name="ChangelogMultipleSelections" xml:space="preserve">
+    <value>Multiple weather and online status selections, with identical names grouped together.</value>
+  </data>
+  <data name="ChangelogRuleEditors" xml:space="preserve">
+    <value>Stable profile window sizing and more room for the Enabled column in rule lists.</value>
+  </data>
+  <data name="ChangelogCtrlClick" xml:space="preserve">
+    <value>Ctrl + click required to delete rules and reset Chat or Focus settings.</value>
+  </data>
+  <data name="ChangelogChat" xml:space="preserve">
+    <value>Chat mentions and custom keywords for a character or Account, in native chat and Chat 2.</value>
+  </data>
+  <data name="ChangelogFocus" xml:space="preserve">
+    <value>Focus mode with configurable channels, range, participants and message opacity.</value>
+  </data>
+  <data name="ChangelogPoses" xml:space="preserve">
+    <value>Direct pose selection with /sk cpose N and an in-plugin command reference.</value>
+  </data>
+  <data name="ChangelogPenumbra" xml:space="preserve">
+    <value>Penumbra location rules with Enable, Disable or Toggle, a target collection and configurable Redraw.</value>
+  </data>
+  <data name="ChangelogLanguages" xml:space="preserve">
+    <value>English and French interfaces with a saved language preference.</value>
+  </data>
+  <data name="ChangelogOwnMentions" xml:space="preserve">
+    <value>Automatic name highlighting ignores your own messages; custom keywords still apply.</value>
+  </data>
 </root>

@@ -8,7 +8,7 @@ A compact Dalamud toolkit for Final Fantasy XIV, with chat and roleplay utilitie
 - **Focus:** Keep nearby or selected players readable while dimming other messages. Choose the channels, range in yalms, participants, and opacity.
 - **Poses:** Switch directly to a numbered `/cpose` for your current posture.
 - **Glamourer rules:** Apply saved outfits based on weather, online status, Eorzea day or night, flying, swimming, diving, mounts, or locations. Restore the previous appearance when a rule ends, while preserving manual changes.
-- **Penumbra rules:** Enable, disable, or toggle mods using the same conditions, with a target collection and configurable Redraw.
+- **Penumbra rules:** Enable, disable, or toggle mods using the same conditions, with a target collection and configurable Redraw. Optional early application attempts to prepare outdoor housing mods during loading; already loaded resources cannot be refreshed this way.
 
 Both rule modules support Account-wide rules and character profiles identified by full name and home world. Character rules take priority over Account rules.
 

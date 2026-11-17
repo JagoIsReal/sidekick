@@ -18,6 +18,8 @@ public sealed class ModLocationRule
     public Guid? CollectionId { get; set; }
     // Defaults preserve the behavior of rules created before schema 5.
     public ModRefreshMode RefreshMode { get; set; }
+    // Opt-in: existing rules continue to wait for a stable destination.
+    public bool EarlyApplication { get; set; }
     // Penumbra directory identifiers, never ambiguous display names or absolute paths.
     public List<string> Mods { get; set; } = [];
 
@@ -27,6 +29,11 @@ public sealed class ModLocationRule
         && Mods is { Count: > 0 and <= 64 }
         && Mods.All(m => !string.IsNullOrWhiteSpace(m) && m.Length <= 260 && !m.Any(char.IsControl)
             && m.IndexOfAny(['/', '\\', ':']) < 0);
+
+    internal bool SupportsEarlyApplication => CollectionId.HasValue && CollectionId != Guid.Empty
+        && Location is not null && (Location.TerritoryId.HasValue || Location.HousingDistrictId.HasValue)
+        && Location.Ward.HasValue && Location.Division.HasValue
+        && Location.Plot is null && Location.Room is null && Location.Indoors is not true;
 
     internal ModLocationRule Copy() => new()
     {
@@ -38,6 +45,7 @@ public sealed class ModLocationRule
         Action = Action,
         CollectionId = CollectionId,
         RefreshMode = RefreshMode,
+        EarlyApplication = EarlyApplication,
         Mods = [.. Mods],
     };
 }

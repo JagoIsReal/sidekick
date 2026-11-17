@@ -68,6 +68,9 @@ internal static class Strings
     internal static string RefreshSelf => Get(nameof(RefreshSelf));
     internal static string RefreshFurniture => Get(nameof(RefreshFurniture));
     internal static string ModRefreshHelp => Get(nameof(ModRefreshHelp));
+    internal static string EarlyApplication => Get(nameof(EarlyApplication));
+    internal static string EarlyApplicationHelp => Get(nameof(EarlyApplicationHelp));
+    internal static string EarlyApplicationResult => Get(nameof(EarlyApplicationResult));
     internal static string Appearance => Get(nameof(Appearance));
     internal static string PenumbraReadyShort => Get(nameof(PenumbraReadyShort));
     internal static string PenumbraUnavailableShort => Get(nameof(PenumbraUnavailableShort));
@@ -266,5 +269,26 @@ internal static class Strings
     internal static string AnyOnlineStatus => Get(nameof(AnyOnlineStatus));
     internal static string RuleSelectionCount => Get(nameof(RuleSelectionCount));
     internal static string RuleMultiSelectionHelp => Get(nameof(RuleMultiSelectionHelp));
+    internal static string ChangelogTab => Get(nameof(ChangelogTab));
+    internal static string ChangelogIntro => Get(nameof(ChangelogIntro));
+    internal static string ChangelogCurrentVersion => Get(nameof(ChangelogCurrentVersion));
+    internal static string ChangelogAdded => Get(nameof(ChangelogAdded));
+    internal static string ChangelogChanged => Get(nameof(ChangelogChanged));
+    internal static string ChangelogRemoved => Get(nameof(ChangelogRemoved));
+    internal static string ChangelogEarlyApplication => Get(nameof(ChangelogEarlyApplication));
+    internal static string ChangelogHistory => Get(nameof(ChangelogHistory));
+    internal static string ChangelogEarlyHelp => Get(nameof(ChangelogEarlyHelp));
+    internal static string ChangelogGlamourer => Get(nameof(ChangelogGlamourer));
+    internal static string ChangelogProfiles => Get(nameof(ChangelogProfiles));
+    internal static string ChangelogConditions => Get(nameof(ChangelogConditions));
+    internal static string ChangelogMultipleSelections => Get(nameof(ChangelogMultipleSelections));
+    internal static string ChangelogRuleEditors => Get(nameof(ChangelogRuleEditors));
+    internal static string ChangelogCtrlClick => Get(nameof(ChangelogCtrlClick));
+    internal static string ChangelogChat => Get(nameof(ChangelogChat));
+    internal static string ChangelogFocus => Get(nameof(ChangelogFocus));
+    internal static string ChangelogPoses => Get(nameof(ChangelogPoses));
+    internal static string ChangelogPenumbra => Get(nameof(ChangelogPenumbra));
+    internal static string ChangelogLanguages => Get(nameof(ChangelogLanguages));
+    internal static string ChangelogOwnMentions => Get(nameof(ChangelogOwnMentions));
 }
 

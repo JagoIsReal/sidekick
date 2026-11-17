@@ -16,11 +16,13 @@ internal sealed class ModRuleEngine(ModRuleSettings settings, IPenumbraGateway p
     internal int ActiveCount => held.Count;
     internal int SkippedCount { get; private set; }
     internal bool CleanupPending { get; private set; }
+    internal int AppliedCount { get; private set; }
 
     internal void Retry() => attempted.Clear();
 
-    internal void Update(LocationSnapshot? location, Guid? characterCollection)
+    internal void Update(LocationSnapshot? location, Guid? characterCollection, bool early = false, bool deferRefresh = false)
     {
+        AppliedCount = 0;
         if (revision != settings.Revision || profileRevision != (profiles?.Revision ?? 0))
         {
             attempted.Clear();
@@ -28,12 +30,19 @@ internal sealed class ModRuleEngine(ModRuleSettings settings, IPenumbraGateway p
             profileRevision = profiles?.Revision ?? 0;
         }
         var desired = new Dictionary<(Guid Collection, string Mod), Desired>();
+        if (early && settings.Enabled)
+        {
+            // Preserve the old location's effects and manual-edit suppression until arrival.
+            foreach (var entry in attempted) desired[entry.Key] = entry.Value;
+            foreach (var entry in held) desired[entry.Key] = entry.Value.Desired;
+        }
         if (settings.Enabled && location is not null)
         {
             // Last matching rule wins per collection/mod, including its refresh policy.
             foreach (var rule in settings.Rules.OrderBy(r => r.ProfileId.HasValue))
             {
-                if (rule.Enabled && rule.IsValid && rule.Location.Matches(location)
+                if (rule.Enabled && rule.IsValid && (!early || rule.EarlyApplication && rule.SupportsEarlyApplication)
+                    && rule.Location.Matches(location)
                     && (rule.ProfileId is null || profiles?.Matches(rule.ProfileId, location.Character) == true))
                 {
                     var target = rule.CollectionId ?? characterCollection;
@@ -128,13 +137,16 @@ internal sealed class ModRuleEngine(ModRuleSettings settings, IPenumbraGateway p
                         pendingRedraw.Remove(refresh);
                     SkippedCount++;
                 }
+                else
+                    AppliedCount++;
             }
             catch (Exception exception)
             {
                 failure ??= exception;
             }
         }
-        foreach (var request in CoalesceRefreshes())
+        // Keep refreshes queued: actors and furniture may not exist during loading.
+        foreach (var request in early || deferRefresh ? [] : CoalesceRefreshes())
         {
             try
             {

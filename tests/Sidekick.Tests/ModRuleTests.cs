@@ -645,6 +645,231 @@ public sealed class ModRuleTests
         Assert.Empty(api.Temporary);
     }
 
+    private static ModLocationRule EarlyRule(ModAction action = ModAction.Toggle, params string[] mods)
+    {
+        var rule = Rule(action, mods);
+        rule.EarlyApplication = true;
+        rule.CollectionId = Collection;
+        rule.Location = new LocationCondition { HousingDistrictId = 339, Ward = 20, Division = 2 };
+        return rule;
+    }
+
+    private static readonly LocationSnapshot Garden = new(339, 21, 0, HousingDistrictId: 339,
+        Ward: 20, Division: 2, Indoors: false, Character: CharacterIdentity.FromName("Test Player", 21));
+
+    [Fact]
+    public void EarlyApplicationTransfersToTheStableRuleWithoutRetogglingAndDefersRedraw()
+    {
+        var api = new FakePenumbra();
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [EarlyRule()] }, api);
+        engine.Update(Garden, null, early: true);
+        Assert.True(Assert.Single(api.Temporary).Value.Enabled);
+        Assert.Empty(api.Redraws);
+        engine.Update(Garden, null, early: true);
+        Assert.Equal(1, api.ApplyCalls);
+        engine.Update(Garden, null);
+        Assert.Equal(1, api.ApplyCalls);
+        Assert.Single(api.Redraws);
+        engine.Update(null, null);
+        Assert.Empty(api.Temporary);
+    }
+
+    [Fact]
+    public void EarlyApplicationKeepsUnrelatedEffectsAndManualOverridesUntilStableArrival()
+    {
+        var api = new FakePenumbra();
+        var old = Rule(ModAction.Enable, "old-mod", "manual-mod");
+        var settings = new ModRuleSettings { Enabled = true, Rules = [old, EarlyRule()] };
+        var engine = new ModRuleEngine(settings, api);
+        engine.Update(Here, Collection);
+        api.Temporary.Remove((Collection, "manual-mod"));
+        engine.Update(Here, Collection);
+        engine.Update(Garden, null, early: true);
+        engine.Update(Garden, null, early: true);
+        Assert.True(api.Temporary.ContainsKey((Collection, "old-mod")));
+        Assert.False(api.Temporary.ContainsKey((Collection, "manual-mod")));
+        Assert.Equal(3, api.ApplyCalls);
+        Assert.Single(api.Redraws);
+        engine.Update(Garden, null);
+        Assert.Equal("test-mod", Assert.Single(api.Temporary).Key.Item2);
+    }
+
+    [Fact]
+    public void EarlyRulesUseCharacterPriorityAndNeverAcquireForeignOverrides()
+    {
+        var api = new FakePenumbra();
+        var account = EarlyRule();
+        var character = EarlyRule(ModAction.Disable);
+        var profile = new RuleCharacterProfile { CharacterName = "Test Player", HomeWorldId = 21 };
+        character.ProfileId = profile.Id;
+        var profiles = new RuleProfileSettings { Characters = [profile] };
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [character, account] }, api, profiles);
+        engine.Update(Garden, null, early: true);
+        Assert.False(Assert.Single(api.Temporary).Value.Enabled);
+        engine.Update(null, null);
+        api.Temporary[(Collection, "test-mod")] = api.Baseline with { Priority = 99 };
+        engine.Update(Garden, null, early: true);
+        Assert.Equal(99, Assert.Single(api.Temporary).Value.Priority);
+        Assert.Equal(1, api.ApplyCalls);
+    }
+
+    [Fact]
+    public void EarlyApplicationNeverFallsBackFromAnUnavailableCollection()
+    {
+        var api = new FakePenumbra { MissingCollectionId = Collection };
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [EarlyRule()] }, api);
+        engine.Update(Garden, Guid.NewGuid(), early: true);
+        Assert.Empty(api.Temporary);
+        Assert.Equal(1, engine.SkippedCount);
+    }
+
+    [Theory]
+    [InlineData("opt-out")]
+    [InlineData("character-collection")]
+    [InlineData("plot")]
+    [InlineData("room")]
+    [InlineData("indoors")]
+    [InlineData("unknown-status")]
+    [InlineData("disabled-profile")]
+    public void UnsupportedOrUnknownConditionsCannotAcquireEarlyOverrides(string scenario)
+    {
+        var rule = EarlyRule();
+        switch (scenario)
+        {
+            case "opt-out": rule.EarlyApplication = false; break;
+            case "character-collection": rule.CollectionId = null; break;
+            case "plot": rule.Location.Plot = 1; break;
+            case "room": rule.Location.Room = 1; break;
+            case "indoors": rule.Location.Indoors = true; break;
+            case "unknown-status": rule.Location.OnlineStatusIds = [0]; break;
+            case "disabled-profile": rule.ProfileId = Guid.NewGuid(); break;
+        }
+        var api = new FakePenumbra();
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [rule] }, api, new());
+        engine.Update(Garden, Collection, early: true);
+        Assert.Empty(api.Temporary);
+    }
+
+    [Fact]
+    public void EarlyPreferencePersistsAndLegacyRulesStayOptedOut()
+    {
+        var config = new Configuration();
+        config.ModRules.Rules = [EarlyRule()];
+        var copy = Assert.Single(config.ModRules.Rules).Copy();
+        Assert.True(copy.EarlyApplication);
+        copy.Location.WeatherIds.Add(7);
+        Assert.Empty(config.ModRules.Rules[0].Location.WeatherIds);
+        var restored = JsonConvert.DeserializeObject<Configuration>(JsonConvert.SerializeObject(config))!;
+        restored.ValidateAndMigrate();
+        Assert.True(Assert.Single(restored.ModRules.Rules).EarlyApplication);
+        var json = Newtonsoft.Json.Linq.JObject.Parse(JsonConvert.SerializeObject(config));
+        ((Newtonsoft.Json.Linq.JObject)json["ModRules"]!["Rules"]![0]!).Remove("EarlyApplication");
+        restored = json.ToObject<Configuration>()!;
+        restored.ValidateAndMigrate();
+        Assert.False(Assert.Single(restored.ModRules.Rules).EarlyApplication);
+    }
+
+    [Fact]
+    public void ControllerCanApplyBetweenPollsWhileLoadingAndRefreshesOnlyAfterStableArrival()
+    {
+        var location = new FakeLocation { Current = Here };
+        var early = new FakeEarlyHousing();
+        var api = new FakePenumbra();
+        var settings = new ModRuleSettings { Enabled = true, Rules = [EarlyRule()] };
+        using var controller = new ModRuleController(Mock.Of<IFramework>(), Mock.Of<IPluginLog>(), location, api,
+            settings, earlyReader: early);
+        controller.Poll(1000);
+        location.IsTransitioning = true;
+        controller.Poll(1010);
+        Assert.Empty(api.Temporary);
+        early.Current = Garden;
+        controller.Poll(1020);
+        Assert.Single(api.Temporary);
+        Assert.Equal(1, controller.LastEarlyApplications);
+        Assert.Empty(api.Redraws);
+        controller.Poll(1030);
+        Assert.Equal(1, api.ApplyCalls);
+        location.IsTransitioning = false;
+        location.Current = Garden;
+        controller.Poll(1100);
+        Assert.Empty(api.Redraws);
+        controller.Poll(2100);
+        Assert.Single(api.Redraws);
+        Assert.Equal(1, api.ApplyCalls);
+        Assert.Equal(1, controller.LastEarlyApplications);
+    }
+
+    [Fact]
+    public void DisablingAnEarlyRuleModuleDuringLoadingReleasesOverridesWithoutRedraw()
+    {
+        var location = new FakeLocation { IsTransitioning = true };
+        var early = new FakeEarlyHousing { Current = Garden };
+        var api = new FakePenumbra();
+        var settings = new ModRuleSettings { Enabled = true, Rules = [EarlyRule()] };
+        using var controller = new ModRuleController(Mock.Of<IFramework>(), Mock.Of<IPluginLog>(), location, api,
+            settings, earlyReader: early);
+        controller.Poll(1000);
+        Assert.Single(api.Temporary);
+        settings.Enabled = false;
+        controller.Poll(1500);
+        Assert.Empty(api.Temporary);
+        Assert.Empty(api.Redraws);
+        Assert.Equal(1, early.ResetCalls);
+    }
+
+    [Fact]
+    public void AManualChangeAfterEarlyApplicationSurvivesStableArrival()
+    {
+        var api = new FakePenumbra();
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [EarlyRule()] }, api);
+        engine.Update(Garden, null, early: true);
+        api.Temporary[(Collection, "test-mod")] = api.Baseline with { Priority = 99 };
+        engine.Update(Garden, null);
+        engine.Update(Garden, null);
+        Assert.Equal(99, Assert.Single(api.Temporary).Value.Priority);
+        Assert.Equal(1, api.ApplyCalls);
+        engine.Update(null, null);
+        Assert.Equal(99, Assert.Single(api.Temporary).Value.Priority);
+    }
+
+    [Fact]
+    public void AbortedEarlyDestinationReleasesItsOverrideWhenAnotherLocationBecomesStable()
+    {
+        var api = new FakePenumbra();
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [EarlyRule()] }, api);
+        engine.Update(Garden, null, early: true);
+        Assert.Single(api.Temporary);
+        engine.Update(Here, null);
+        Assert.Empty(api.Temporary);
+        Assert.Single(api.Redraws);
+    }
+
+    [Fact]
+    public void FailingToReleaseTheOldOverrideBlocksEarlyAcquisition()
+    {
+        var api = new FakePenumbra();
+        var rule = Rule();
+        var engine = new ModRuleEngine(new() { Enabled = true, Rules = [rule, EarlyRule(ModAction.Disable)] }, api);
+        engine.Update(Here, Collection);
+        api.FailRelease = true;
+        engine.Update(Garden, null, early: true);
+        Assert.True(engine.CleanupPending);
+        Assert.Equal(1, api.ApplyCalls);
+        Assert.True(Assert.Single(api.Temporary).Value.Enabled);
+        api.FailRelease = false;
+        engine.Update(Garden, null, early: true);
+        Assert.False(Assert.Single(api.Temporary).Value.Enabled);
+        Assert.Equal(2, api.ApplyCalls);
+    }
+
+    private sealed class FakeEarlyHousing : IEarlyHousingReader
+    {
+        internal LocationSnapshot? Current { get; set; }
+        internal int ResetCalls { get; private set; }
+        public LocationSnapshot? Read(bool transitioning) => transitioning ? Current : null;
+        public void Reset() => ResetCalls++;
+    }
+
     private sealed class FakeLocation : ILocationReader
     {
         public bool IsTransitioning { get; set; }

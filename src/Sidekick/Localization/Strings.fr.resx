@@ -780,4 +780,76 @@ Instance {2} · Secteur {3} · Parcelle {4} · Pièce {5}</value>
   <data name="RuleMultiSelectionHelp" xml:space="preserve">
     <value>Cochez une ou plusieurs entrées. Une seule des entrées cochées doit correspondre ; les autres conditions de la règle restent nécessaires. Les noms identiques sont regroupés. Une case partielle indique une ancienne sélection limitée à certaines variantes. Choisir Tous efface ce filtre.</value>
   </data>
+  <data name="EarlyApplication" xml:space="preserve">
+    <value>Application anticipée</value>
+  </data>
+  <data name="EarlyApplicationHelp" xml:space="preserve">
+    <value>Tente d'appliquer les mods avant le chargement de la zone (ex : meubles de jardin). Sélectionnez Default, un quartier résidentiel, un secteur et sa division. Laissez parcelles et pièce sur Tous et la zone sur Tous ou Extérieur.</value>
+  </data>
+  <data name="EarlyApplicationResult" xml:space="preserve">
+    <value>Appliqués pendant le dernier chargement : {0} mod(s)</value>
+  </data>
+  <data name="ChangelogTab" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="ChangelogIntro" xml:space="preserve">
+    <value>Les ajouts, changements et retraits de chaque version de Sidekick.</value>
+  </data>
+  <data name="ChangelogCurrentVersion" xml:space="preserve">
+    <value>Version actuelle</value>
+  </data>
+  <data name="ChangelogAdded" xml:space="preserve">
+    <value>Ajouts</value>
+  </data>
+  <data name="ChangelogChanged" xml:space="preserve">
+    <value>Changements</value>
+  </data>
+  <data name="ChangelogRemoved" xml:space="preserve">
+    <value>Retraits</value>
+  </data>
+  <data name="ChangelogEarlyApplication" xml:space="preserve">
+    <value>Application anticipée des mods de jardin pendant le chargement de la zone, avec un compteur pour le dernier chargement.</value>
+  </data>
+  <data name="ChangelogHistory" xml:space="preserve">
+    <value>Onglet Changelog avec l'historique des versions en français et en anglais.</value>
+  </data>
+  <data name="ChangelogEarlyHelp" xml:space="preserve">
+    <value>Infobulle raccourcie pour expliquer le réglage de l'application anticipée.</value>
+  </data>
+  <data name="ChangelogGlamourer" xml:space="preserve">
+    <value>Tenues Glamourer conditionnelles, avec restauration de l'apparence précédente en préservant les changements manuels.</value>
+  </data>
+  <data name="ChangelogProfiles" xml:space="preserve">
+    <value>Profils Compte et Personnage communs aux règles Glamourer et Penumbra.</value>
+  </data>
+  <data name="ChangelogConditions" xml:space="preserve">
+    <value>Conditions de météo, jour ou nuit éorzéenne, vol, monture, nage, plongée et état en ligne.</value>
+  </data>
+  <data name="ChangelogMultipleSelections" xml:space="preserve">
+    <value>Sélection de plusieurs météos et états en ligne, avec regroupement des noms identiques.</value>
+  </data>
+  <data name="ChangelogRuleEditors" xml:space="preserve">
+    <value>Taille stable de la fenêtre de profil et colonne Actif élargie dans les listes de règles.</value>
+  </data>
+  <data name="ChangelogCtrlClick" xml:space="preserve">
+    <value>Ctrl + clic requis pour supprimer des règles et réinitialiser les réglages Chat ou Focus.</value>
+  </data>
+  <data name="ChangelogChat" xml:space="preserve">
+    <value>Mentions du personnage et mots-clés liés à un personnage ou au compte, dans le chat natif et Chat 2.</value>
+  </data>
+  <data name="ChangelogFocus" xml:space="preserve">
+    <value>Mode Focus avec canaux, portée, participants et opacité des messages configurables.</value>
+  </data>
+  <data name="ChangelogPoses" xml:space="preserve">
+    <value>Sélection directe des poses avec /sk cpose N et liste des commandes dans le plugin.</value>
+  </data>
+  <data name="ChangelogPenumbra" xml:space="preserve">
+    <value>Règles Penumbra par lieu avec activation, désactivation ou Toggle, collection ciblée et Redraw configurable.</value>
+  </data>
+  <data name="ChangelogLanguages" xml:space="preserve">
+    <value>Interface en français et en anglais, avec choix de langue enregistré.</value>
+  </data>
+  <data name="ChangelogOwnMentions" xml:space="preserve">
+    <value>La détection automatique du nom ignore vos propres messages ; les mots-clés continuent de s'appliquer.</value>
+  </data>
 </root>

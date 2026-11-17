@@ -54,6 +54,8 @@ internal sealed class ModRulesPanel
         Ui.Muted(string.Format(CultureInfo.InvariantCulture, Strings.ModRulesStatus, controller.ActiveCount, controller.SkippedCount));
         if (controller.Failed)
             Ui.Wrapped(Strings.ModIntegrationError);
+        if (settings.Rules.Any(r => r.EarlyApplication))
+            Ui.Muted(string.Format(CultureInfo.InvariantCulture, Strings.EarlyApplicationResult, controller.LastEarlyApplications));
 
         ImGui.Spacing();
         if (ImGui.BeginTable("###CurrentLocation", 2, ImGuiTableFlags.SizingStretchProp))
@@ -262,6 +264,13 @@ internal sealed class ModRulesPanel
         if (Ui.Combo("Refresh", ref refresh,
             new[] { Strings.RefreshCollection, Strings.RefreshAll, Strings.RefreshSelf, Strings.RefreshFurniture }))
             rule.RefreshMode = (ModRefreshMode)refresh;
+        ImGui.Spacing();
+        ImGui.BeginDisabled(!rule.SupportsEarlyApplication);
+        var early = rule.EarlyApplication;
+        if (ImGui.Checkbox($"{Strings.EarlyApplication}###EarlyApplication", ref early))
+            rule.EarlyApplication = early;
+        ImGui.EndDisabled();
+        Ui.Help("EarlyApplicationHelp", Strings.EarlyApplicationHelp);
         Ui.Section("SelectedMods", string.Format(CultureInfo.InvariantCulture, Strings.SelectedMods, rule.Mods.Count));
         ImGui.SetNextItemWidth(-1);
         ImGui.InputTextWithHint("###SearchMods", Strings.SearchMods, ref search, 128);

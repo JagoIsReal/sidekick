@@ -27,6 +27,7 @@ public sealed class Plugin : IDalamudPlugin
     private readonly ChatSubscription chat;
     private readonly SettingsWindow settings;
     private readonly ModRuleController modRules;
+    private readonly EarlyHousingReader earlyHousing;
     private readonly FocusController focus;
     private readonly CposeController cposes;
     private readonly GlamourerRuleController glamourerRules;
@@ -50,8 +51,9 @@ public sealed class Plugin : IDalamudPlugin
         focus = new FocusController(configuration, new NearbyFocusPlayers(clientState, objects, condition, framework),
             new GameChatColors(gameConfig, data), framework, log);
         var ruleContext = new GameLocationReader(clientState, playerState, condition, objects);
+        earlyHousing = new EarlyHousingReader(clientState, playerState);
         modRules = new ModRuleController(framework, log, ruleContext,
-            new PenumbraGateway(pluginInterface, commands), configuration.Value.ModRules, configuration.Value.RuleProfiles);
+            new PenumbraGateway(pluginInterface, commands), configuration.Value.ModRules, configuration.Value.RuleProfiles, earlyHousing);
         glamourerRules = new GlamourerRuleController(framework, clientState, ruleContext,
             new GlamourerGateway(pluginInterface, objects), log, configuration.Value.Glamourer, configuration.Value.RuleProfiles);
         settings = new SettingsWindow(configuration, character, highlighter, data, modRules, focus, glamourerRules,
@@ -64,6 +66,7 @@ public sealed class Plugin : IDalamudPlugin
             windows.RemoveAllWindows();
             character.Dispose();
             modRules.Dispose();
+            earlyHousing.Dispose();
             glamourerRules.Dispose();
             focus.Dispose();
             cposes.Dispose();
@@ -88,6 +91,7 @@ public sealed class Plugin : IDalamudPlugin
         cposes.Dispose();
         focus.Dispose();
         modRules.Dispose();
+        earlyHousing.Dispose();
         glamourerRules.Dispose();
         character.Dispose();
         pluginInterface.UiBuilder.Draw -= windows.Draw;
