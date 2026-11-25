@@ -109,24 +109,34 @@ internal static class Ui
         var clicked = ImGui.Button($"###{id}", new Vector2(ImGui.GetFrameHeight()));
         if (primary)
             ImGui.PopStyleColor(2);
-        var center = (ImGui.GetItemRectMin() + ImGui.GetItemRectMax()) * 0.5f;
+        DrawItemIcon(icon);
+        Tooltip(help);
+        return clicked;
+    }
+
+    internal static unsafe void DrawItemIcon(FontAwesomeIcon icon, float sizeScale = 1f)
+    {
+        var minimum = ImGui.GetItemRectMin();
+        var maximum = ImGui.GetItemRectMax();
+        if (maximum.X <= minimum.X || maximum.Y <= minimum.Y)
+            return;
+        var center = (minimum + maximum) * 0.5f;
         ImGui.PushFont(UiBuilder.IconFont);
         try
         {
             var font = ImGui.GetFont();
             var glyph = new ImFontGlyphPtr(font.FindGlyph((ushort)icon));
-            var scale = ImGui.GetFontSize() / Math.Max(1, font.FontSize);
+            var size = ImGui.GetFontSize() * sizeScale;
+            var scale = size / Math.Max(1, font.FontSize);
             // Center the visible glyph, rather than its advance width or font line box.
-            var offset = glyph.IsNull ? ImGui.CalcTextSize(icon.ToIconString()) * 0.5f
+            var offset = glyph.IsNull ? ImGui.CalcTextSize(icon.ToIconString()) * (0.5f * sizeScale)
                 : new Vector2(glyph.X0 + glyph.X1, glyph.Y0 + glyph.Y1) * (0.5f * scale);
-            ImGui.GetWindowDrawList().AddText(center - offset, ImGui.GetColorU32(ImGuiCol.Text), icon.ToIconString());
+            ImGui.GetWindowDrawList().AddText(font, size, center - offset, ImGui.GetColorU32(ImGuiCol.Text), icon.ToIconString());
         }
         finally
         {
             ImGui.PopFont();
         }
-        Tooltip(help);
-        return clicked;
     }
 
     internal static bool CtrlIconButton(string id, FontAwesomeIcon icon, string help)

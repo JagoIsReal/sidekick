@@ -90,18 +90,15 @@ internal sealed class SettingsWindow : Window
     private void DrawTab(string id, string title, Action draw, bool scroll = true, FontAwesomeIcon? icon = null)
     {
         var flags = ImGuiTabItemFlags.None;
-        var iconLabel = icon?.ToIconString();
-        if (iconLabel is not null)
+        if (icon.HasValue)
         {
-            ImGui.PushFont(UiBuilder.IconFont);
-            var padding = ImGui.GetStyle().FramePadding.X;
-            ImGui.SetNextItemWidth(ImGui.CalcTextSize(iconLabel).X + 2 * padding + ImGui.GetFontSize());
+            ImGui.SetNextItemWidth(ImGui.GetFrameHeight() + 2 * ImGui.GetStyle().FramePadding.X);
             flags = ImGuiTabItemFlags.Trailing | ImGuiTabItemFlags.NoReorder | ImGuiTabItemFlags.NoTooltip;
         }
-        var selected = ImGui.BeginTabItem($"{iconLabel ?? title}###Sidekick.{id}", flags);
-        if (iconLabel is not null)
+        var selected = ImGui.BeginTabItem($"{(icon.HasValue ? "" : title)}###Sidekick.{id}", flags);
+        if (icon is { } tabIcon)
         {
-            ImGui.PopFont();
+            Ui.DrawItemIcon(tabIcon, sizeScale: 0.85f);
             Ui.Tooltip(title);
         }
         if (!selected)
