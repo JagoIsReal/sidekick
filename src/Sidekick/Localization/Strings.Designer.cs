@@ -290,5 +290,22 @@ internal static class Strings
     internal static string ChangelogPenumbra => Get(nameof(ChangelogPenumbra));
     internal static string ChangelogLanguages => Get(nameof(ChangelogLanguages));
     internal static string ChangelogOwnMentions => Get(nameof(ChangelogOwnMentions));
+    internal static string StatusRulesTab => Get(nameof(StatusRulesTab));
+    internal static string StatusRulesIntro => Get(nameof(StatusRulesIntro));
+    internal static string EnableStatusRules => Get(nameof(EnableStatusRules));
+    internal static string StatusRulePolicy => Get(nameof(StatusRulePolicy));
+    internal static string StatusUpdateFailed => Get(nameof(StatusUpdateFailed));
+    internal static string AddStatusRule => Get(nameof(AddStatusRule));
+    internal static string NoStatusRules => Get(nameof(NoStatusRules));
+    internal static string StatusRuleSummary => Get(nameof(StatusRuleSummary));
+    internal static string StatusRuleTrigger => Get(nameof(StatusRuleTrigger));
+    internal static string StatusTriggerHelp => Get(nameof(StatusTriggerHelp));
+    internal static string StatusAtLogin => Get(nameof(StatusAtLogin));
+    internal static string StatusWhenMatched => Get(nameof(StatusWhenMatched));
+    internal static string StatusRuleTarget => Get(nameof(StatusRuleTarget));
+    internal static string SelectStatusTarget => Get(nameof(SelectStatusTarget));
+    internal static string StatusRuleInvalid => Get(nameof(StatusRuleInvalid));
+    internal static string ChangelogStatusRules => Get(nameof(ChangelogStatusRules));
+    internal static string ChangelogSettingsGear => Get(nameof(ChangelogSettingsGear));
 }
 

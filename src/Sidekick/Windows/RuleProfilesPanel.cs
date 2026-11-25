@@ -7,7 +7,7 @@ using Sidekick.Rules;
 
 namespace Sidekick.Windows;
 
-// Shared by both rule tabs. Selecting an editing profile never changes the active game identity.
+// Selecting an editing profile never changes the active game identity.
 internal sealed class RuleProfilesPanel(ConfigurationStore store, LocationChoices choices, LocalCharacterTracker character)
 {
     internal Guid? Selected { get; private set; }
@@ -42,8 +42,7 @@ internal sealed class RuleProfilesPanel(ConfigurationStore store, LocationChoice
             if (ImGui.Selectable($"{Strings.Account}###Account", Selected is null)) Selected = null;
             foreach (var profile in store.Value.RuleProfiles.Characters)
                 if (ImGui.Selectable($"{Name(profile.Id)}###{profile.Id}", Selected == profile.Id)) Selected = profile.Id;
-            foreach (var missing in store.Value.ModRules.Rules.Select(r => r.ProfileId)
-                .Concat(store.Value.Glamourer.Rules.Select(r => r.ProfileId)).Where(id => id is not null
+            foreach (var missing in ReferencedProfiles().Where(id => id is not null
                     && store.Value.RuleProfiles.Characters.All(p => p.Id != id)).Distinct())
                 if (ImGui.Selectable($"{Strings.MissingRuleProfile}###{missing}", Selected == missing)) Selected = missing;
             ImGui.EndCombo();
@@ -59,8 +58,7 @@ internal sealed class RuleProfilesPanel(ConfigurationStore store, LocationChoice
         if (Ui.IconButton("RuleProfiles.Edit", FontAwesomeIcon.PencilAlt, Strings.Edit) && current is not null) Open(current.Copy());
         ImGui.EndDisabled();
         ImGui.SameLine();
-        var used = Selected is not null && (store.Value.ModRules.Rules.Any(r => r.ProfileId == Selected)
-            || store.Value.Glamourer.Rules.Any(r => r.ProfileId == Selected));
+        var used = Selected is not null && ReferencedProfiles().Contains(Selected);
         ImGui.BeginDisabled(Selected is null || used);
         if (Ui.IconButton("RuleProfiles.Remove", FontAwesomeIcon.Trash, used ? Strings.RuleProfileInUse : Strings.Remove))
         {
@@ -73,6 +71,10 @@ internal sealed class RuleProfilesPanel(ConfigurationStore store, LocationChoice
         DrawEditor();
         ImGui.Spacing();
     }
+
+    private IEnumerable<Guid?> ReferencedProfiles() => store.Value.ModRules.Rules.Select(r => r.ProfileId)
+        .Concat(store.Value.Glamourer.Rules.Select(r => r.ProfileId))
+        .Concat(store.Value.StatusRules.Rules.Select(r => r.ProfileId));
 
     private void Open(RuleCharacterProfile profile)
     {

@@ -12,6 +12,7 @@ using Sidekick.Focus;
 using Sidekick.Poses;
 using Sidekick.Commands;
 using Sidekick.Appearance;
+using Sidekick.Status;
 
 namespace Sidekick;
 
@@ -31,6 +32,7 @@ public sealed class Plugin : IDalamudPlugin
     private readonly FocusController focus;
     private readonly CposeController cposes;
     private readonly GlamourerRuleController glamourerRules;
+    private readonly StatusRuleController statusRules;
     private readonly IChatGui chatGui;
     private readonly bool shortCommandRegistered;
     private readonly CommandInfo commandInfo;
@@ -56,7 +58,9 @@ public sealed class Plugin : IDalamudPlugin
             new PenumbraGateway(pluginInterface, commands), configuration.Value.ModRules, configuration.Value.RuleProfiles, earlyHousing);
         glamourerRules = new GlamourerRuleController(framework, clientState, ruleContext,
             new GlamourerGateway(pluginInterface, objects), log, configuration.Value.Glamourer, configuration.Value.RuleProfiles);
-        settings = new SettingsWindow(configuration, character, highlighter, data, modRules, focus, glamourerRules,
+        statusRules = new StatusRuleController(framework, clientState, ruleContext,
+            new GameOnlineStatus(framework, ruleContext).TryApply, log, configuration.Value.StatusRules, configuration.Value.RuleProfiles);
+        settings = new SettingsWindow(configuration, character, highlighter, data, modRules, focus, glamourerRules, statusRules,
             () => commandInfo.HelpMessage = Strings.CommandHelp);
         cposes = new CposeController(framework, new GameCpose(framework, clientState, playerState, objects, condition, data, log), chatGui, log);
         windows.AddWindow(settings);
@@ -68,6 +72,7 @@ public sealed class Plugin : IDalamudPlugin
             modRules.Dispose();
             earlyHousing.Dispose();
             glamourerRules.Dispose();
+            statusRules.Dispose();
             focus.Dispose();
             cposes.Dispose();
             throw new InvalidOperationException("The /sidekick command is already registered.");
@@ -93,6 +98,7 @@ public sealed class Plugin : IDalamudPlugin
         modRules.Dispose();
         earlyHousing.Dispose();
         glamourerRules.Dispose();
+        statusRules.Dispose();
         character.Dispose();
         pluginInterface.UiBuilder.Draw -= windows.Draw;
         pluginInterface.UiBuilder.OpenConfigUi -= OpenSettings;

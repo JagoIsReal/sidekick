@@ -852,4 +852,55 @@ Instance {2} · Secteur {3} · Parcelle {4} · Pièce {5}</value>
   <data name="ChangelogOwnMentions" xml:space="preserve">
     <value>La détection automatique du nom ignore vos propres messages ; les mots-clés continuent de s'appliquer.</value>
   </data>
+  <data name="StatusRulesTab" xml:space="preserve">
+    <value>Règles Statut</value>
+  </data>
+  <data name="StatusRulesIntro" xml:space="preserve">
+    <value>Modifiez le statut de votre personnage à la connexion ou lorsque les conditions sont remplies.</value>
+  </data>
+  <data name="EnableStatusRules" xml:space="preserve">
+    <value>Activer les règles de statut</value>
+  </data>
+  <data name="StatusRulePolicy" xml:space="preserve">
+    <value>À la connexion, une règle de connexion applicable est prioritaire. En jeu, Sidekick applique une règle lorsqu’elle devient prioritaire. Vous pouvez ensuite changer de statut manuellement tant que cette règle reste prioritaire.</value>
+  </data>
+  <data name="StatusUpdateFailed" xml:space="preserve">
+    <value>Le jeu n’a pas confirmé le changement de statut demandé.</value>
+  </data>
+  <data name="AddStatusRule" xml:space="preserve">
+    <value>Ajouter une règle de statut</value>
+  </data>
+  <data name="NoStatusRules" xml:space="preserve">
+    <value>Aucune règle de statut pour ce profil.</value>
+  </data>
+  <data name="StatusRuleSummary" xml:space="preserve">
+    <value>{0} → {1}</value>
+  </data>
+  <data name="StatusRuleTrigger" xml:space="preserve">
+    <value>Déclencheur</value>
+  </data>
+  <data name="StatusTriggerHelp" xml:space="preserve">
+    <value>À la connexion, Sidekick vérifie les conditions une fois le personnage chargé et le contexte stabilisé. Laissez les filtres vides pour appliquer la règle à chaque connexion. En jeu, au moins une condition est requise.</value>
+  </data>
+  <data name="StatusAtLogin" xml:space="preserve">
+    <value>À la connexion</value>
+  </data>
+  <data name="StatusWhenMatched" xml:space="preserve">
+    <value>Lorsque les conditions sont remplies</value>
+  </data>
+  <data name="StatusRuleTarget" xml:space="preserve">
+    <value>Statut à appliquer</value>
+  </data>
+  <data name="SelectStatusTarget" xml:space="preserve">
+    <value>Sélectionner un statut</value>
+  </data>
+  <data name="StatusRuleInvalid" xml:space="preserve">
+    <value>Saisissez un nom, choisissez un statut et vérifiez les conditions. Une règle utilisée en jeu exige au moins une condition.</value>
+  </data>
+  <data name="ChangelogStatusRules" xml:space="preserve">
+    <value>Changez votre statut à la connexion ou lorsque les conditions communes sont remplies. Par exemple, passez de Novice à En ligne dès la connexion.</value>
+  </data>
+  <data name="ChangelogSettingsGear" xml:space="preserve">
+    <value>Les paramètres sont accessibles via un onglet plus large avec un rouage à droite de la barre.</value>
+  </data>
 </root>

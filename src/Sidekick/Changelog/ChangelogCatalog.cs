@@ -14,6 +14,11 @@ internal static class ChangelogCatalog
     [
         new(currentVersion,
         [
+            new(ChangeKind.Added, [Strings.ChangelogStatusRules]),
+            new(ChangeKind.Changed, [Strings.ChangelogSettingsGear]),
+        ]),
+        new(new Version(0, 11, 2, 0),
+        [
             new(ChangeKind.Added,
             [
                 Strings.ChangelogEarlyApplication,

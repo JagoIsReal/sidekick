@@ -851,4 +851,55 @@
   <data name="ChangelogOwnMentions" xml:space="preserve">
     <value>Automatic name highlighting ignores your own messages; custom keywords still apply.</value>
   </data>
+  <data name="StatusRulesTab" xml:space="preserve">
+    <value>Status Rules</value>
+  </data>
+  <data name="StatusRulesIntro" xml:space="preserve">
+    <value>Set your character’s online status at login or when conditions match.</value>
+  </data>
+  <data name="EnableStatusRules" xml:space="preserve">
+    <value>Enable status rules</value>
+  </data>
+  <data name="StatusRulePolicy" xml:space="preserve">
+    <value>At login, a matching login rule takes priority. During play, Sidekick applies a rule when it becomes the highest-priority match. You can then change your status manually while that rule remains the highest-priority match.</value>
+  </data>
+  <data name="StatusUpdateFailed" xml:space="preserve">
+    <value>The game did not confirm the requested status change.</value>
+  </data>
+  <data name="AddStatusRule" xml:space="preserve">
+    <value>Add a status rule</value>
+  </data>
+  <data name="NoStatusRules" xml:space="preserve">
+    <value>No status rules for this profile.</value>
+  </data>
+  <data name="StatusRuleSummary" xml:space="preserve">
+    <value>{0} → {1}</value>
+  </data>
+  <data name="StatusRuleTrigger" xml:space="preserve">
+    <value>Trigger</value>
+  </data>
+  <data name="StatusTriggerHelp" xml:space="preserve">
+    <value>At login, Sidekick checks the first stable context after your character loads. Leave the filters empty to always apply the rule at login. Rules used during play require at least one condition.</value>
+  </data>
+  <data name="StatusAtLogin" xml:space="preserve">
+    <value>At login</value>
+  </data>
+  <data name="StatusWhenMatched" xml:space="preserve">
+    <value>When conditions match</value>
+  </data>
+  <data name="StatusRuleTarget" xml:space="preserve">
+    <value>Set status to</value>
+  </data>
+  <data name="SelectStatusTarget" xml:space="preserve">
+    <value>Select a status</value>
+  </data>
+  <data name="StatusRuleInvalid" xml:space="preserve">
+    <value>Enter a name, select a status, and check the conditions. A rule used during play needs at least one condition.</value>
+  </data>
+  <data name="ChangelogStatusRules" xml:space="preserve">
+    <value>Set your online status at login or when shared rule conditions match. For example, switch from New Adventurer to Online on login.</value>
+  </data>
+  <data name="ChangelogSettingsGear" xml:space="preserve">
+    <value>Settings are now on a wider gear tab at the right of the tab bar.</value>
+  </data>
 </root>

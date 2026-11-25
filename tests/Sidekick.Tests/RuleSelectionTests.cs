@@ -80,7 +80,7 @@ public sealed class RuleSelectionTests
         configuration.Glamourer.Rules.Add(new() { Name = "Outfit", Conditions = new() { WeatherId = 8 }, DesignId = Guid.NewGuid() });
         var restored = JsonConvert.DeserializeObject<Configuration>(JsonConvert.SerializeObject(configuration))!;
         restored.ValidateAndMigrate();
-        Assert.Equal(9, restored.Version);
+        Assert.Equal(Configuration.CurrentVersion, restored.Version);
         var mods = Assert.Single(restored.ModRules.Rules);
         var outfit = Assert.Single(restored.Glamourer.Rules);
         Assert.True(restored.ModRules.Enabled);

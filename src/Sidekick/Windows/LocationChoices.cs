@@ -3,6 +3,7 @@ using Dalamud.Plugin.Services;
 using Lumina.Excel.Sheets;
 using Sidekick.Localization;
 using Sidekick.Rules;
+using Sidekick.Status;
 
 namespace Sidekick.Windows;
 
@@ -15,6 +16,7 @@ internal sealed class LocationChoices
     internal (uint Id, string Name)[] Districts { get; private set; } = [];
     internal (uint Id, string Name)[] Weathers { get; private set; } = [];
     internal (uint Id, string Name)[] OnlineStatuses { get; private set; } = [];
+    internal (uint Id, string Name)[] StatusTargetsForRules { get; private set; } = [];
     internal RuleOptionGroup[] WeatherGroups { get; private set; } = [];
     internal RuleOptionGroup[] StatusGroups { get; private set; } = [];
 
@@ -43,12 +45,12 @@ internal sealed class LocationChoices
             .Select(s => (s.RowId, s.Name.ExtractText())).ToList();
         // Native status 0 means no special status for a loaded local actor. The sheet's
         // named Online row also represents it in social lists; present both as one choice.
-        var onlineId = data.GetExcelSheet<OnlineStatus>(ClientLanguage.English)
-            .FirstOrDefault(s => s.Name.ExtractText() == "Online").RowId;
-        var onlineName = statuses.FirstOrDefault(s => s.RowId == onlineId).Item2;
+        var onlineName = statuses.FirstOrDefault(s => s.RowId == StatusTargets.Online).Item2;
         if (!string.IsNullOrWhiteSpace(onlineName)) statuses.Add((0, onlineName));
         OnlineStatuses = statuses.ToArray();
         StatusGroups = RuleOptionGroup.Create(OnlineStatuses);
+        StatusTargetsForRules = StatusTargets.Selectable.Select(id => statuses.FirstOrDefault(s => s.RowId == id))
+            .Where(s => !string.IsNullOrWhiteSpace(s.Item2)).ToArray();
         culture = Strings.Culture.Name;
     }
 

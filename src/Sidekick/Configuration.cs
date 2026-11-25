@@ -6,13 +6,14 @@ using Sidekick.Focus;
 using Sidekick.Localization;
 using Sidekick.Rules;
 using Sidekick.Appearance;
+using Sidekick.Status;
 
 namespace Sidekick;
 
 [Serializable]
 public sealed class Configuration : IPluginConfiguration
 {
-    public const int CurrentVersion = 9;
+    public const int CurrentVersion = 10;
 
     public int Version { get; set; } = CurrentVersion;
     public bool Enabled { get; set; } = true;
@@ -25,6 +26,7 @@ public sealed class Configuration : IPluginConfiguration
     public FocusSettings Focus { get; set; } = new();
     public RuleProfileSettings RuleProfiles { get; set; } = new();
     public GlamourerSettings Glamourer { get; set; } = new();
+    public StatusRuleSettings StatusRules { get; set; } = new();
 
     public void ValidateAndMigrate()
     {
@@ -45,6 +47,8 @@ public sealed class Configuration : IPluginConfiguration
         RuleProfiles.Validate();
         Glamourer ??= new GlamourerSettings();
         Glamourer.Validate();
+        StatusRules ??= new StatusRuleSettings();
+        StatusRules.Validate();
 
         // Additive migrations preserve chat preferences and keep mod rules opt-in.
         Version = CurrentVersion;

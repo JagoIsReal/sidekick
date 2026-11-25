@@ -9,12 +9,13 @@ A compact Dalamud toolkit for Final Fantasy XIV, with chat and roleplay utilitie
 - **Poses:** Switch directly to a numbered `/cpose` for your current posture.
 - **Glamourer rules:** Apply saved outfits based on weather, online status, Eorzea day or night, flying, swimming, diving, mounts, or locations. Restore the previous appearance when a rule ends, while preserving manual changes.
 - **Penumbra rules:** Enable, disable, or toggle mods using the same conditions, with a target collection and configurable Redraw. Optional early application attempts to prepare outdoor housing mods during loading; already loaded resources cannot be refreshed this way.
+- **Status rules:** Set your online status at login or when conditions match. To switch from New Adventurer to Online, choose **At login**, filter **Online status** to **New Adventurer**, and set the target to **Online**.
 
-Both rule modules support Account-wide rules and character profiles identified by full name and home world. Character rules take priority over Account rules.
+Rule modules support Account-wide rules and character profiles identified by full name and home world. Character rules take priority over Account rules.
 
 Select multiple weathers or online statuses in a rule. Deleting rules and resetting settings require **Ctrl + click**.
 
-English and French interfaces are available in **Settings**. Chat appearance changes apply to new messages.
+Use the gear at the right of the tab bar to switch between English and French. Chat appearance changes apply to new messages.
 
 ## Commands
 

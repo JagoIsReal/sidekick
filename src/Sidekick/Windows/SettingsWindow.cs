@@ -14,6 +14,7 @@ using Sidekick.Player;
 using Sidekick.Mods;
 using Sidekick.Focus;
 using Sidekick.Appearance;
+using Sidekick.Status;
 
 namespace Sidekick.Windows;
 
@@ -26,6 +27,7 @@ internal sealed class SettingsWindow : Window
     private readonly ModRulesPanel mods;
     private readonly FocusSettingsPanel focusPanel;
     private readonly GlamourerRulesPanel glamourerPanel;
+    private readonly StatusRulesPanel statusPanel;
     private readonly LocationChoices choices;
     private readonly CommandsPanel commands = new();
     private readonly ChangelogPanel changelog = new();
@@ -38,7 +40,8 @@ internal sealed class SettingsWindow : Window
     private bool previewEdited;
 
     public SettingsWindow(ConfigurationStore store, LocalCharacterTracker character, ChatHighlighter highlighter,
-        IDataManager data, ModRuleController modRules, FocusController focus, GlamourerRuleController glamourer, Action? languageChanged = null)
+        IDataManager data, ModRuleController modRules, FocusController focus, GlamourerRuleController glamourer,
+        StatusRuleController statusRules, Action? languageChanged = null)
         : base($"{Strings.SettingsTitle}###Sidekick.Settings")
     {
         this.store = store;
@@ -50,6 +53,7 @@ internal sealed class SettingsWindow : Window
         var profiles = new RuleProfilesPanel(store, choices, character);
         mods = new ModRulesPanel(store, modRules, choices, profiles);
         glamourerPanel = new GlamourerRulesPanel(store, glamourer, profiles, choices);
+        statusPanel = new StatusRulesPanel(store, statusRules, profiles, choices);
         focusPanel = new FocusSettingsPanel(store, focus, choices);
         preferences = new PreferencesPanel(store, SetLanguage);
         Size = new Vector2(820, 760);
@@ -76,15 +80,31 @@ internal sealed class SettingsWindow : Window
         DrawTab("Focus", Strings.FocusTab, focusPanel.Draw);
         DrawTab("ModRules", Strings.ModRulesTab, mods.Draw, false);
         DrawTab("Glamourer", Strings.GlamourerTab, glamourerPanel.Draw, false);
+        DrawTab("Status", Strings.StatusRulesTab, statusPanel.Draw, false);
         DrawTab("Commands", Strings.CommandsTab, commands.Draw);
         DrawTab("Changelog", Strings.ChangelogTab, changelog.Draw);
-        DrawTab("Preferences", Strings.PreferencesTab, preferences.Draw);
+        DrawTab("Preferences", Strings.PreferencesTab, preferences.Draw, icon: FontAwesomeIcon.Cog);
         ImGui.EndTabBar();
     }
 
-    private void DrawTab(string id, string title, Action draw, bool scroll = true)
+    private void DrawTab(string id, string title, Action draw, bool scroll = true, FontAwesomeIcon? icon = null)
     {
-        if (!ImGui.BeginTabItem($"{title}###Sidekick.{id}"))
+        var flags = ImGuiTabItemFlags.None;
+        var iconLabel = icon?.ToIconString();
+        if (iconLabel is not null)
+        {
+            ImGui.PushFont(UiBuilder.IconFont);
+            var padding = ImGui.GetStyle().FramePadding.X;
+            ImGui.SetNextItemWidth(ImGui.CalcTextSize(iconLabel).X + 2 * padding + ImGui.GetFontSize());
+            flags = ImGuiTabItemFlags.Trailing | ImGuiTabItemFlags.NoReorder | ImGuiTabItemFlags.NoTooltip;
+        }
+        var selected = ImGui.BeginTabItem($"{iconLabel ?? title}###Sidekick.{id}", flags);
+        if (iconLabel is not null)
+        {
+            ImGui.PopFont();
+            Ui.Tooltip(title);
+        }
+        if (!selected)
             return;
         if (activeTab != id)
         {

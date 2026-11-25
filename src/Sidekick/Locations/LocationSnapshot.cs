@@ -51,12 +51,15 @@ public sealed record LocationCondition
     public bool? Diving { get; set; }
     public bool? Mounted { get; set; }
 
-    internal bool IsValid => WeatherIds is not null && OnlineStatusIds is not null
-        && (TerritoryId.HasValue || WorldId.HasValue || PublicInstanceId.HasValue
+    internal bool HasSelection => TerritoryId.HasValue || WorldId.HasValue || PublicInstanceId.HasValue
         || HousingDistrictId.HasValue || Ward.HasValue || Plot.HasValue || Room.HasValue
         || Division.HasValue || Indoors.HasValue || WeatherId.HasValue || Daytime.HasValue
         || Flying.HasValue || Swimming.HasValue || Diving.HasValue || Mounted.HasValue
-        || WeatherIds.Count > 0 || OnlineStatusIds.Count > 0)
+        || WeatherIds is { Count: > 0 } || OnlineStatusIds is { Count: > 0 };
+
+    internal bool IsValid => HasSelection && IsWellFormed;
+
+    internal bool IsWellFormed => WeatherIds is not null && OnlineStatusIds is not null
         && TerritoryId is not 0 && WorldId is not 0 && HousingDistrictId is not 0
         && PublicInstanceId is null or >= 1 and <= 9
         && Ward is null or >= 1 and <= 30 && Plot is null or >= 1 and <= 60
